@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools" package="com.bereguliak.arscheduler">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
             android:name=".App"
             android:allowBackup="true"
@@ -19,6 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="14a7e67a2c840ac2f2d7b3e07fbc8b6a7affdd47"/>
     </application>
 
 </manifest>
