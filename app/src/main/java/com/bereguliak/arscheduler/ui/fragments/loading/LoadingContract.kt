@@ -2,6 +2,7 @@ package com.bereguliak.arscheduler.ui.fragments.loading
 
 interface LoadingContract {
     interface View {
+        fun showNetworkConnectionCheck()
         fun showDatabaseCheck()
         fun showCalendarConnection()
 
@@ -10,6 +11,9 @@ interface LoadingContract {
     }
 
     interface Presenter {
+        fun onSubscribe()
+        fun unSubscribe()
+
         fun startInitialization()
     }
 }
