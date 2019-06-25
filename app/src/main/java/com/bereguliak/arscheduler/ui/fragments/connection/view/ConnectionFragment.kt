@@ -5,6 +5,7 @@ import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.bereguliak.arscheduler.ui.fragments.connection.presenter.ConnectionPresenter
+import kotlinx.android.synthetic.main.fragment_connection.*
 
 class ConnectionFragment : BaseFragment(), ConnectionContract.View {
 
@@ -17,7 +18,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun getContentViewId() = R.layout.fragment_connection
 
     override fun initView() {
-
+        fragmentConnectionGoToArButton.setOnClickListener {
+            navigator.showArSchedulerScreen()
+        }
     }
     //endregion
 
