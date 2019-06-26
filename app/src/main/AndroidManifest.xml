@@ -3,7 +3,6 @@
           xmlns:tools="http://schemas.android.com/tools" package="com.bereguliak.arscheduler">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-feature android:name="android.hardware.camera.ar" android:required="true"/>
@@ -18,7 +17,8 @@
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".ui.activity.main.MainActivity">
+        <activity android:name=".ui.activity.main.MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -29,6 +29,9 @@
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="14a7e67a2c840ac2f2d7b3e07fbc8b6a7affdd47"/>
+
+        <meta-data android:name="com.google.ar.core" android:value="required"/>
+
     </application>
 
 </manifest>
