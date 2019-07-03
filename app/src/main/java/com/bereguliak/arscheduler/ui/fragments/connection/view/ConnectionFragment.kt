@@ -22,8 +22,6 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
             presenter.init(it)
         }
 
-
-
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
         }
