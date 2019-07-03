@@ -6,6 +6,10 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
+kapt {
+    generateStubs = true
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -30,15 +34,30 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Android Support
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
+    // Dagger 2
+    implementation 'com.google.dagger:dagger-android:2.16' exclude group: "com.android.support"
+    implementation 'com.google.dagger:dagger-android-support:2.16'
+
+    implementation "com.google.dagger:dagger:2.16"
+    kapt "com.google.dagger:dagger-compiler:2.16"
+
+    // if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.15'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
+
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0-M1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0-M1"
 
+    // AR
     implementation "com.google.ar.sceneform.ux:sceneform-ux:1.10.0" exclude group: "com.android.support"
 
+    // Calendar API
     implementation 'com.google.apis:google-api-services-calendar:v3-rev260-1.23.0' exclude module: 'httpclient'
     implementation 'com.google.api-client:google-api-client-android:1.23.0' exclude module: 'httpclient'
     implementation 'com.google.http-client:google-http-client-gson:1.23.0' exclude module: 'httpclient'
