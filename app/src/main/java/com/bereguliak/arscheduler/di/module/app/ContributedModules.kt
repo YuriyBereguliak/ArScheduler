@@ -1,4 +1,4 @@
-package com.bereguliak.arscheduler.di.module.contributed
+package com.bereguliak.arscheduler.di.module.app
 
 import com.bereguliak.arscheduler.di.module.connection.ConnectionModule
 import com.bereguliak.arscheduler.di.module.loading.LoadingModule

@@ -2,7 +2,7 @@ package com.bereguliak.arscheduler.di.component
 
 import com.bereguliak.arscheduler.App
 import com.bereguliak.arscheduler.di.module.app.AppModule
-import com.bereguliak.arscheduler.di.module.contributed.ContributedModules
+import com.bereguliak.arscheduler.di.module.app.ContributedModules
 import com.bereguliak.arscheduler.di.scope.AppScope
 import dagger.BindsInstance
 import dagger.Component
