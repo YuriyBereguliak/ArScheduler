@@ -1,21 +1,19 @@
 package com.bereguliak.arscheduler.ui.fragments.ar.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.bereguliak.arscheduler.ui.ar.AugmentedImageNode
 import com.bereguliak.arscheduler.ui.fragments.ar.ArScheduleContract
 import com.bereguliak.arscheduler.ui.fragments.ar.presenter.ArSchedulePresenter
 import com.google.ar.core.*
 import com.google.ar.sceneform.ux.ArFragment
 import java.io.IOException
-import java.util.*
 
 class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
 
-    private val augmentedImageMap = HashMap<AugmentedImage, AugmentedImageNode>()
 
     private val presenter: ArScheduleContract.Presenter by lazy { ArSchedulePresenter(this) }
 
@@ -39,10 +37,22 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
                 val database = AugmentedImageDatabase.deserialize(session, open)
                 config.augmentedImageDatabase = database
             } catch (e: IOException) {
-
+                Log.e(javaClass.name, e.message)
             }
         }
         return config
+    }
+    //endregion
+
+    //region ArScheduleContract.View
+    override fun createNode(image: AugmentedImage) {
+        AugmentedImageNode(context)
+            .apply {
+                this.image = image
+            }.also { node ->
+                presenter.addNode(image, node)
+                arSceneView.scene.addChild(node)
+            }
     }
     //endregion
 
@@ -51,23 +61,8 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
         arSceneView.arFrame?.takeIf { it.camera.trackingState != TrackingState.TRACKING }?.let { frame ->
             frame.getUpdatedTrackables(AugmentedImage::class.java).forEach { image ->
                 when (image.trackingState) {
-                    TrackingState.PAUSED -> {
-                        Toast.makeText(context, "Detecting :: ${image.index}", Toast.LENGTH_SHORT).show()
-                    }
-                    TrackingState.TRACKING -> {
-                        augmentedImageMap.containsKey(image).takeIf { !it }?.let {
-                            AugmentedImageNode(context)
-                                .apply {
-                                    this.image = image
-                                }.also { node ->
-                                    augmentedImageMap[image] = node
-                                    arSceneView.scene.addChild(node)
-                                }
-                        }
-                    }
-                    TrackingState.STOPPED -> {
-                        augmentedImageMap.remove(image)
-                    }
+                    TrackingState.TRACKING -> presenter.trackImage(image)
+                    TrackingState.STOPPED -> presenter.removeImage(image)
                 }
             }
         }
