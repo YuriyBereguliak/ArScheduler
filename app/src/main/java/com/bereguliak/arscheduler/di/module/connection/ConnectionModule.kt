@@ -8,5 +8,5 @@ import dagger.android.ContributesAndroidInjector
 abstract class ConnectionModule {
     @ContributesAndroidInjector(modules = [ConnectionContractModule::class])
     @ConnectionScope
-    internal abstract fun contributeLoginCredentialsFragment(): ConnectionFragment
+    internal abstract fun contributeConnectionFragment(): ConnectionFragment
 }

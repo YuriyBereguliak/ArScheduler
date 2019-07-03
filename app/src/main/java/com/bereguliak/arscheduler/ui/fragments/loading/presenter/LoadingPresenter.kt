@@ -4,8 +4,10 @@ import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.ui.fragments.loading.LoadingContract
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoadingPresenter(private val view: LoadingContract.View) : BaseCoroutinePresenter(), LoadingContract.Presenter {
+class LoadingPresenter @Inject constructor(private val view: LoadingContract.View) : BaseCoroutinePresenter(),
+    LoadingContract.Presenter {
 
     //region LoadingContract.Presenter
     override fun startInitialization() {
