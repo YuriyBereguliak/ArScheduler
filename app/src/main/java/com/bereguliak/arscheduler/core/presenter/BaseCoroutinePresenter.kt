@@ -1,9 +1,7 @@
 package com.bereguliak.arscheduler.core.presenter
 
 import android.support.annotation.CallSuper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -11,7 +9,7 @@ import kotlin.coroutines.CoroutineContext
  */
 abstract class BaseCoroutinePresenter : CoroutineScope {
 
-    private lateinit var job: Job
+    private var job: Job = SupervisorJob()
 
     //region CoroutineScope
     override val coroutineContext: CoroutineContext
@@ -20,13 +18,8 @@ abstract class BaseCoroutinePresenter : CoroutineScope {
 
     //region BaseCoroutinePresenter
     @CallSuper
-    fun onSubscribe() {
-        job = Job()
-    }
-
-    @CallSuper
     fun unSubscribe() {
-        job.cancel()
+        coroutineContext.cancelChildren()
     }
     //endregion
 }

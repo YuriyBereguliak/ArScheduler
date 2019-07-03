@@ -18,6 +18,11 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun getContentViewId() = R.layout.fragment_connection
 
     override fun initView() {
+        context?.let {
+            presenter.init(it)
+        }
+
+
 
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
