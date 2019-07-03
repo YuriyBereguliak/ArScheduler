@@ -1,6 +1,5 @@
 package com.bereguliak.arscheduler.ui.fragments.loading.view
 
-import android.os.Bundle
 import android.support.annotation.LayoutRes
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
@@ -20,13 +19,8 @@ class LoadingFragment : BaseFragment(), LoadingContract.View {
         presenter.startInitialization()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        presenter.onSubscribe()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onStop() {
+        super.onStop()
         presenter.unSubscribe()
     }
     //endregion

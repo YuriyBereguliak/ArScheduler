@@ -11,7 +11,6 @@ interface LoadingContract {
     }
 
     interface Presenter {
-        fun onSubscribe()
         fun unSubscribe()
 
         fun startInitialization()
