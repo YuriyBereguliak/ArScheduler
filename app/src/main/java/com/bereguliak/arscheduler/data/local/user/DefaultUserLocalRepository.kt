@@ -1,8 +1,10 @@
 package com.bereguliak.arscheduler.data.local.user
 
 import android.content.Context
+import com.bereguliak.arscheduler.di.AppContext
+import javax.inject.Inject
 
-class DefaultUserLocalRepository(context: Context) : UserLocalRepository {
+class DefaultUserLocalRepository @Inject constructor(@AppContext context: Context) : UserLocalRepository {
 
     private val preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
@@ -11,7 +13,7 @@ class DefaultUserLocalRepository(context: Context) : UserLocalRepository {
         preferences.edit().putString(KEY_USER_NAME, userName).apply()
     }
 
-    override fun loadUserName(): String? = preferences.getString(KEY_USER_NAME, null    )
+    override fun loadUserName(): String? = preferences.getString(KEY_USER_NAME, null)
     //endregion
 
     //region Utility structure
