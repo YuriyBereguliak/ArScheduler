@@ -6,6 +6,10 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
+kapt {
+    generateStubs = true
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -35,8 +39,14 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     // Dagger 2
-    implementation 'com.google.dagger:dagger:2.16' exclude group: "com.android.support"
+    implementation 'com.google.dagger:dagger-android:2.16' exclude group: "com.android.support"
     implementation 'com.google.dagger:dagger-android-support:2.16'
+
+    implementation "com.google.dagger:dagger:2.16"
+    kapt "com.google.dagger:dagger-compiler:2.16"
+
+    // if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.15'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.16'
 
     // Kotlin

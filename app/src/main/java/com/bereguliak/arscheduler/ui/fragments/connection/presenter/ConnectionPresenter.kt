@@ -10,8 +10,10 @@ import com.google.api.client.json.JsonFactory
 import com.google.api.client.json.gson.GsonFactory
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
+import javax.inject.Inject
 
-class ConnectionPresenter(private val view: ConnectionContract.View) : ConnectionContract.Presenter {
+class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View) :
+    ConnectionContract.Presenter {
 
     private val transport = AndroidHttp.newCompatibleTransport()
     private val jsonFactory: JsonFactory = GsonFactory.getDefaultInstance()

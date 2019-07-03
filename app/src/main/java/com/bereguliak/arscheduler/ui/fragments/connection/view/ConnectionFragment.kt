@@ -4,20 +4,22 @@ import android.support.annotation.LayoutRes
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
-import com.bereguliak.arscheduler.ui.fragments.connection.presenter.ConnectionPresenter
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_connection.*
+import javax.inject.Inject
 
 class ConnectionFragment : BaseFragment(), ConnectionContract.View {
 
-    private val presenter: ConnectionContract.Presenter  by lazy {
-        ConnectionPresenter(this)
-    }
+    @Inject
+    lateinit var presenter: ConnectionContract.Presenter
 
     //region BaseFragment
     @LayoutRes
     override fun getContentViewId() = R.layout.fragment_connection
 
     override fun initView() {
+        AndroidSupportInjection.inject(this)
+
         context?.let {
             presenter.init(it)
         }
