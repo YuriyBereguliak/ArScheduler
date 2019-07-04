@@ -1,5 +1,8 @@
 package com.bereguliak.arscheduler.ui.fragments.ar.view
 
+import android.content.res.AssetManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,9 +36,21 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
         val config = super.getSessionConfiguration(session)
         context?.assets?.let { assetManager ->
             try {
-                val open = assetManager.open("sample_database.imgdb")
-                val database = AugmentedImageDatabase.deserialize(session, open)
-                config.augmentedImageDatabase = database
+//                val open = assetManager.open("sample_database.imgdb")
+//                val database = AugmentedImageDatabase.deserialize(session, open)
+
+                context?.assets?.let { manager ->
+                    val augmentedImageDatabase = AugmentedImageDatabase(session)
+
+//                    augmentedImageDatabase.add("icons/urban_room.png", manager)
+
+//                    augmentedImageDatabase.add("icons/algorithm_room.png", manager)
+                    augmentedImageDatabase.add("icons/genius_room.png", manager)
+                    augmentedImageDatabase.add("icons/travel_room.png", manager)
+//                    augmentedImageDatabase.add("icons/green_room.png", manager)
+
+                    config.augmentedImageDatabase = augmentedImageDatabase
+                }
             } catch (e: IOException) {
                 Log.e(javaClass.name, e.message)
             }
@@ -67,9 +82,22 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
             }
         }
     }
+
+    private fun AugmentedImageDatabase.add(resource: String, assetManager: AssetManager) {
+        addImage(resource, loadAugmentedImageBitmap(assetManager, resource))
+    }
+
+    private fun loadAugmentedImageBitmap(assetManager: AssetManager, name: String): Bitmap? {
+        try {
+            assetManager.open(name).use { stream -> return BitmapFactory.decodeStream(stream) }
+        } catch (e: IOException) {
+            Log.e(javaClass.name, "IO exception loading augmented image bitmap.", e)
+        }
+        return null
+    }
     //endregion
 
-    //region Utility API
+    //region Utility structure
     companion object {
         @JvmStatic
         fun newInstance() = ArScheduleFragment()
