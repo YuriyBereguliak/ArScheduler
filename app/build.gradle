@@ -6,10 +6,6 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.ar.sceneform.plugin'
 
-kapt {
-    generateStubs = true
-}
-
 android {
     compileSdkVersion 28
     defaultConfig {
