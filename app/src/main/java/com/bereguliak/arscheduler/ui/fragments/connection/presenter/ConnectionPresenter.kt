@@ -12,12 +12,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class ConnectionPresenter @Inject constructor(
-    private val view: ConnectionContract.View,
-    private val credential: GoogleAccountCredential,
-    private val client: Calendar,
-    private val userLocalRepository: UserLocalRepository
-) : BaseCoroutinePresenter(), ConnectionContract.Presenter {
+class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
+                                              private val credential: GoogleAccountCredential,
+                                              private val client: Calendar,
+                                              private val userLocalRepository: UserLocalRepository)
+    : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
     //region ConnectionContract.Presenter
     override fun loadUserInfo() {

@@ -21,17 +21,14 @@ class GoogleApiModule {
     fun provideTransport(): HttpTransport = AndroidHttp.newCompatibleTransport()
 
     @Provides
-    fun provideCredentials(context: Context) =
-        GoogleAccountCredential.usingOAuth2(context, setOf(CalendarScopes.CALENDAR))
+    fun provideCredentials(context: Context) = GoogleAccountCredential.usingOAuth2(context, setOf(CalendarScopes.CALENDAR))
 
     @Provides
-    fun provideCalendar(
-        jsonFactory: JsonFactory,
-        transport: HttpTransport,
-        credential: GoogleAccountCredential
-    ): Calendar {
+    fun provideCalendar(jsonFactory: JsonFactory,
+                        transport: HttpTransport,
+                        credential: GoogleAccountCredential): Calendar {
         return Calendar.Builder(transport, jsonFactory, credential)
-            .setApplicationName("BereguliakArScheduler")
-            .build()
+                .setApplicationName("BereguliakArScheduler")
+                .build()
     }
 }
