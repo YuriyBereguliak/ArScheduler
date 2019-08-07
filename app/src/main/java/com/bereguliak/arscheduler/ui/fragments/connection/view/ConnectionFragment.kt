@@ -24,9 +24,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun initView() {
         AndroidSupportInjection.inject(this)
 
-        context?.let {
-            presenter.init(it)
-        }
+        presenter.loadUserInfo()
 
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()

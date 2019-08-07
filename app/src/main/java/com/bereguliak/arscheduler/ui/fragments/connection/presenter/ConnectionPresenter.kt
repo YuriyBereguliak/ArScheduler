@@ -31,7 +31,7 @@ class ConnectionPresenter @Inject constructor(
         .build()
 
     //region ConnectionContract.Presenter
-    override fun init(context: Context) {
+    override fun loadUserInfo() {
         launch {
             val userName = withContext(Dispatchers.IO) { userLocalRepository.loadUserName() }
             credential.selectedAccountName = userName

@@ -10,7 +10,7 @@ interface ConnectionContract {
     }
 
     interface Presenter {
-        fun init(context: Context)
+        fun loadUserInfo()
 
         fun saveUserName(userName:String)
 
