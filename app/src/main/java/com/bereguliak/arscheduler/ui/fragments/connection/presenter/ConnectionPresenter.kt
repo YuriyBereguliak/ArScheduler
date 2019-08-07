@@ -6,10 +6,7 @@ import com.bereguliak.arscheduler.model.CalendarInfo
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.services.calendar.Calendar
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
@@ -21,7 +18,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     //region ConnectionContract.Presenter
     override fun loadUserInfo() {
         launch {
-            val userName = withContext(Dispatchers.IO) { userLocalRepository.loadUserName() }
+            val userName = loadUserName()
             credential.selectedAccountName = userName
 
             if (userName.isNullOrEmpty()) {
@@ -36,22 +33,29 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     override fun saveUserName(userName: String) {
         launch {
             credential.selectedAccountName = userName
-
-            withContext(Dispatchers.IO) { userLocalRepository.saveUserName(userName) }
+            saveUserInfo(userName)
         }
     }
 
     override fun startDownloadDataFromCalendar() {
-        val handler = CoroutineExceptionHandler { _, exception ->
-            println("Caught $exception")
-        }
-
-        launch(handler) {
-            val result = withContext(Dispatchers.IO) {
-                client.calendarList().list().setFields(CalendarInfo.FEED_FIELDS).execute()
-            }
+        launch(exceptionHandler) {
+            val result = loadInfoFromCalendar()
             println(result.toString())
         }
+    }
+    //endregion
+
+    //region Utility API
+    private suspend fun loadUserName() = withDispatcherIO {
+        userLocalRepository.loadUserName()
+    }
+
+    private suspend fun saveUserInfo(userName: String) = withDispatcherIO {
+        userLocalRepository.saveUserName(userName)
+    }
+
+    private suspend fun loadInfoFromCalendar() = withDispatcherIO {
+        client.calendarList().list().setFields(CalendarInfo.FEED_FIELDS).execute()
     }
     //endregion
 }
