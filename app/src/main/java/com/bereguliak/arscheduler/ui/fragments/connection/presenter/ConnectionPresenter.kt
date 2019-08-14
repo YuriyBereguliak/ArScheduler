@@ -1,10 +1,12 @@
 package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 
+import android.util.Log
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.data.local.user.UserLocalRepository
 import com.bereguliak.arscheduler.model.CalendarInfo
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.services.calendar.Calendar
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +18,12 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
     //region ConnectionContract.Presenter
+    override fun prepareChooseAccount() {
+        view.chooseAccount(credential)
+    }
+
     override fun loadUserInfo() {
-        launch {
+        launch(exceptionHandler) {
             val userName = loadUserName()
             credential.selectedAccountName = userName
 
@@ -25,7 +31,6 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
                 view.chooseAccount(credential)
             } else {
                 view.accountConnected()
-                startDownloadDataFromCalendar()
             }
         }
     }
@@ -38,9 +43,14 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     }
 
     override fun startDownloadDataFromCalendar() {
-        launch(exceptionHandler) {
-            val result = loadInfoFromCalendar()
-            println(result.toString())
+        launch {
+            try {
+                val result = loadInfoFromCalendar()
+                Log.d("ConnectionPresenter", result.toString())
+            } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
+                Log.e("ConnectionPresenter", recoverableAuthIOException.toString())
+                view.authorizationRequired(recoverableAuthIOException.intent)
+            }
         }
     }
     //endregion
