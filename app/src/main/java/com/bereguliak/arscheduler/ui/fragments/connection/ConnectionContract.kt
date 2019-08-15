@@ -7,9 +7,13 @@ interface ConnectionContract {
     interface View {
         fun chooseAccount(credentials: GoogleAccountCredential)
 
+        fun setUserName(user: String)
+
         fun accountConnected()
 
         fun authorizationRequired(intent: Intent)
+
+        fun userCalendarsLoaded()
     }
 
     interface Presenter {
@@ -20,5 +24,9 @@ interface ConnectionContract {
         fun startDownloadDataFromCalendar()
 
         fun prepareChooseAccount()
+
+        fun logout()
+
+        fun unSubscribe()
     }
 }

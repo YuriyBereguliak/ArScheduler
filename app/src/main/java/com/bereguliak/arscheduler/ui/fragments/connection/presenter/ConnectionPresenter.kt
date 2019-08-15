@@ -8,6 +8,7 @@ import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.services.calendar.Calendar
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,14 +31,15 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
             if (userName.isNullOrEmpty()) {
                 view.chooseAccount(credential)
             } else {
+                view.setUserName(userName)
                 view.accountConnected()
             }
         }
     }
 
     override fun saveUserName(userName: String) {
-        launch {
-            credential.selectedAccountName = userName
+        credential.selectedAccountName = userName
+        GlobalScope.launch {
             saveUserInfo(userName)
         }
     }
@@ -46,10 +48,19 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
         launch {
             try {
                 val result = loadInfoFromCalendar()
+                view.userCalendarsLoaded()
                 Log.d("ConnectionPresenter", result.toString())
             } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
-                Log.e("ConnectionPresenter", recoverableAuthIOException.toString())
                 view.authorizationRequired(recoverableAuthIOException.intent)
+            }
+        }
+    }
+
+    override fun logout() {
+        view.setUserName("")
+        GlobalScope.launch {
+            withDispatcherIO {
+                userLocalRepository.clearUserInfo()
             }
         }
     }

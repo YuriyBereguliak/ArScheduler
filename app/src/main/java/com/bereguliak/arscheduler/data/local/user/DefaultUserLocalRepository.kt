@@ -9,11 +9,15 @@ class DefaultUserLocalRepository @Inject constructor(@AppContext context: Contex
     private val preferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     //region UserLocalRepository
+    override fun loadUserName(): String? = preferences.getString(KEY_USER_NAME, null)
+
     override fun saveUserName(userName: String) {
         preferences.edit().putString(KEY_USER_NAME, userName).apply()
     }
 
-    override fun loadUserName(): String? = preferences.getString(KEY_USER_NAME, null)
+    override fun clearUserInfo() {
+        preferences.edit().remove(KEY_USER_NAME).apply()
+    }
     //endregion
 
     //region Utility structure

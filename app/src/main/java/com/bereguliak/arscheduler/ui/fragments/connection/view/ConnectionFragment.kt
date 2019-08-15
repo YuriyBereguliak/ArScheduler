@@ -4,7 +4,7 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Intent
 import android.support.annotation.LayoutRes
-import android.widget.Toast
+import android.view.View
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
@@ -30,6 +30,20 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
         }
+        userLogout.setOnClickListener {
+            userLogout.visibility = View.GONE
+            userNameHint.visibility = View.GONE
+            userConnectionStatus.setImageResource(R.drawable.ic_calendar_error)
+            presenter.logout()
+        }
+        userIcon.setOnClickListener {
+            presenter.prepareChooseAccount()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.unSubscribe()
     }
     //endregion
 
@@ -48,13 +62,24 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         startActivityForResult(credentials.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER)
     }
 
+    override fun setUserName(user: String) {
+        userName.text = user
+    }
+
     override fun accountConnected() {
-        Toast.makeText(context!!, "Account connected", Toast.LENGTH_SHORT).show()
+        userLogout.visibility = View.VISIBLE
+        userNameHint.visibility = View.VISIBLE
+        userConnectionStatus.setImageResource(R.drawable.ic_calendar_sync)
         presenter.startDownloadDataFromCalendar()
     }
 
     override fun authorizationRequired(intent: Intent) {
         startActivityForResult(intent, REQUEST_AUTHORIZATION)
+    }
+
+    override fun userCalendarsLoaded() {
+        fragmentConnectionGoToArButton.isEnabled = true
+        userConnectionStatus.setImageResource(R.drawable.ic_calendar_ready)
     }
     //endregion
 
@@ -63,6 +88,8 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         if (resultCode == Activity.RESULT_OK && data != null) {
             data.extras?.let { extras ->
                 extras.getString(AccountManager.KEY_ACCOUNT_NAME)?.let { userName ->
+                    setUserName(userName)
+                    accountConnected()
                     presenter.saveUserName(userName)
                     presenter.startDownloadDataFromCalendar()
                 }
