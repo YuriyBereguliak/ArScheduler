@@ -1,9 +1,8 @@
 package com.bereguliak.arscheduler.core.presenter
 
 import android.support.annotation.CallSuper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import android.util.Log
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -11,7 +10,11 @@ import kotlin.coroutines.CoroutineContext
  */
 abstract class BaseCoroutinePresenter : CoroutineScope {
 
-    private lateinit var job: Job
+    private var job: Job = SupervisorJob()
+
+    protected val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Log.e("Error", exception.message)
+    }
 
     //region CoroutineScope
     override val coroutineContext: CoroutineContext
@@ -19,14 +22,21 @@ abstract class BaseCoroutinePresenter : CoroutineScope {
     //endregion
 
     //region BaseCoroutinePresenter
-    @CallSuper
-    fun onSubscribe() {
-        job = Job()
+    protected suspend fun <T> withDispatcherIO(block: suspend CoroutineScope.() -> T): T {
+        return onDispatcher(Dispatchers.IO, block)
     }
 
     @CallSuper
     fun unSubscribe() {
-        job.cancel()
+        coroutineContext.cancelChildren()
+    }
+    //endregion
+
+    //region Utility API
+    private suspend fun <T> onDispatcher(dispatcher: CoroutineDispatcher, block: suspend CoroutineScope.() -> T): T {
+        return withContext(dispatcher) {
+            block()
+        }
     }
     //endregion
 }
