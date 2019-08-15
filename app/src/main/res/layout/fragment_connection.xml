@@ -97,16 +97,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/fragmentConnectionGoToArButton"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Open Calendar"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:listitem="@layout/item_calendar_locations" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fragmentConnectionGoToArButton"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/margin_all_default"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:useCompatPadding="true" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
