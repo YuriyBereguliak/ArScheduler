@@ -6,7 +6,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 
 interface ConnectionContract {
     interface View {
-        fun chooseAccount(credentials: GoogleAccountCredential)
+        fun chooseAccount()
 
         fun setUserName(user: String)
 
@@ -22,7 +22,7 @@ interface ConnectionContract {
     interface Presenter {
         fun loadUserInfo()
 
-        fun saveUserName(userName: String)
+        fun userAccountSelected(userName: String)
 
         fun startDownloadDataFromCalendar()
 

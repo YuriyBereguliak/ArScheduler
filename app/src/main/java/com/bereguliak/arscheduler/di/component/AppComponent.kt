@@ -4,7 +4,6 @@ import com.bereguliak.arscheduler.App
 import com.bereguliak.arscheduler.di.module.app.AppModule
 import com.bereguliak.arscheduler.di.module.connection.ConnectionModule
 import com.bereguliak.arscheduler.di.module.data.local.LocalRepositoryModule
-import com.bereguliak.arscheduler.di.module.google.GoogleApiModule
 import com.bereguliak.arscheduler.di.module.loading.LoadingModule
 import com.bereguliak.arscheduler.di.scope.AppScope
 import dagger.BindsInstance
@@ -15,14 +14,13 @@ import javax.inject.Singleton
 
 @AppScope
 @Component(
-    modules = [
-        AndroidInjectionModule::class,
-        AndroidSupportInjectionModule::class,
-        AppModule::class,
-        LocalRepositoryModule::class,
-        GoogleApiModule::class,
-        ConnectionModule::class,
-        LoadingModule::class]
+        modules = [
+            AndroidInjectionModule::class,
+            AndroidSupportInjectionModule::class,
+            AppModule::class,
+            LocalRepositoryModule::class,
+            ConnectionModule::class,
+            LoadingModule::class]
 )
 @Singleton
 interface AppComponent {
