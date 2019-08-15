@@ -31,6 +31,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
             navigator.showArSchedulerScreen()
         }
         userLogout.setOnClickListener {
+            fragmentConnectionGoToArButton.isEnabled = false
             userLogout.visibility = View.GONE
             userNameHint.visibility = View.GONE
             userConnectionStatus.setImageResource(R.drawable.ic_calendar_error)
