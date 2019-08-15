@@ -1,9 +1,9 @@
 package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 
-import android.util.Log
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.data.local.user.UserLocalRepository
 import com.bereguliak.arscheduler.model.CalendarInfo
+import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
@@ -49,7 +49,13 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
             try {
                 val result = loadInfoFromCalendar()
                 view.userCalendarsLoaded()
-                Log.d("ConnectionPresenter", result.toString())
+
+                val locations = withDispatcherIO {
+                    result.items.map { entry ->
+                        CalendarLocation(entry.id, entry.summary)
+                    }.toMutableList()
+                }
+                view.showUserCalendarLocations(locations)
             } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
                 view.authorizationRequired(recoverableAuthIOException.intent)
             }

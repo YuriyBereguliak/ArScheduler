@@ -7,7 +7,9 @@ import android.support.annotation.LayoutRes
 import android.view.View
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
+import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
+import com.bereguliak.arscheduler.ui.fragments.connection.adapter.UserCalendarsAdapter
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_connection.*
@@ -18,6 +20,8 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     @Inject
     lateinit var presenter: ConnectionContract.Presenter
 
+    private val adapter: UserCalendarsAdapter by lazy { UserCalendarsAdapter() }
+
     //region BaseFragment
     @LayoutRes
     override fun getContentViewId() = R.layout.fragment_connection
@@ -25,7 +29,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun initView() {
         AndroidSupportInjection.inject(this)
 
-        presenter.loadUserInfo()
+        userCalendarsRecyclerView.adapter = adapter
 
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
@@ -40,6 +44,8 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         userIcon.setOnClickListener {
             presenter.prepareChooseAccount()
         }
+
+        presenter.loadUserInfo()
     }
 
     override fun onStop() {
@@ -81,6 +87,10 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun userCalendarsLoaded() {
         fragmentConnectionGoToArButton.isEnabled = true
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_ready)
+    }
+
+    override fun showUserCalendarLocations(data: MutableList<CalendarLocation>) {
+        adapter.data = data
     }
     //endregion
 

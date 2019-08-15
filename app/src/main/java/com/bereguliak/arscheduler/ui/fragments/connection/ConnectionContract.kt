@@ -1,6 +1,7 @@
 package com.bereguliak.arscheduler.ui.fragments.connection
 
 import android.content.Intent
+import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 
 interface ConnectionContract {
@@ -14,6 +15,8 @@ interface ConnectionContract {
         fun authorizationRequired(intent: Intent)
 
         fun userCalendarsLoaded()
+
+        fun showUserCalendarLocations(data: MutableList<CalendarLocation>)
     }
 
     interface Presenter {
