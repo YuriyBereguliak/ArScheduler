@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="margin_all_very_small">4dp</dimen>
+    <dimen name="margin_all_small">8dp</dimen>
+    <dimen name="margin_all_medium">12dp</dimen>
+    <dimen name="margin_all_default">16dp</dimen>
+    <dimen name="margin_all_bigger">24dp</dimen>
+    <dimen name="margin_all_big">32dp</dimen>
+
+    <!--Default text sizes, per the Android Design guidelines.
+    See {@link https://material.io/guidelines/style/typography.html#typography-styles}-->
+    <dimen name="textsize_all_caption">12dp</dimen>
+    <dimen name="textsize_all_body">14dp</dimen>
+    <dimen name="textsize_all_subheading">16dp</dimen>
+    <dimen name="textsize_all_title">20dp</dimen>
+    <dimen name="textsize_all_headline">24dp</dimen>
+    <dimen name="textsize_all_display_1">34dp</dimen>
+    <dimen name="textsize_all_display_2">45dp</dimen>
+    <dimen name="textsize_all_display_3">56dp</dimen>
+    <dimen name="textsize_all_display_4">112dp</dimen>
+
+    <dimen name="height_divider">2dp</dimen>
+</resources>

@@ -7,21 +7,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoadingPresenter @Inject constructor(private val view: LoadingContract.View) : BaseCoroutinePresenter(),
-    LoadingContract.Presenter {
+        LoadingContract.Presenter {
 
     //region LoadingContract.Presenter
     override fun startInitialization() {
         launch {
-
-            view.showNetworkConnectionCheck()
-            delay(1000L)
-
-            view.showDatabaseCheck()
-            delay(1000L)
-
-            view.showDatabaseCheck()
-            delay(1000L)
-
+            delay(2000L)
             view.showConnectionScreen()
         }
     }

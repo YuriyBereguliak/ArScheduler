@@ -29,18 +29,6 @@ class LoadingFragment : BaseFragment(), LoadingContract.View {
     //endregion
 
     //region LoadingContract.View
-    override fun showNetworkConnectionCheck() {
-        loadingStatusTextView.setText(R.string.loading_status_network_connection_check)
-    }
-
-    override fun showDatabaseCheck() {
-        loadingStatusTextView.setText(R.string.loading_status_database_check)
-    }
-
-    override fun showCalendarConnection() {
-        loadingStatusTextView.setText(R.string.loading_status_calendar_connection_check)
-    }
-
     override fun showConnectionScreen() {
         navigator.showConnectionScreen()
     }
