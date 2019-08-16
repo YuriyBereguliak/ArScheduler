@@ -1,8 +1,8 @@
 package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
-import com.bereguliak.arscheduler.data.local.user.UserLocalRepository
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrchestrator
+import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
                                               private val calendarLocationOrchestrator: CalendarLocationOrchestrator,
-                                              private val userLocalRepository: UserLocalRepository)
+                                              private val userOrchestrator: UserOrchestrator)
     : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
     //region ConnectionContract.Presenter
@@ -22,14 +22,14 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
     override fun loadUserInfo() {
         launch(exceptionHandler) {
-            val userName = loadUserName()
-
-            if (userName.isNullOrEmpty()) {
-                prepareChooseAccount()
+            if (userOrchestrator.isUserSignedIn()) {
+                loadUserName()?.let { userName ->
+                    calendarLocationOrchestrator.initUserAccount()
+                    view.setUserName(userName)
+                    view.accountConnected()
+                }
             } else {
-                calendarLocationOrchestrator.initUserAccount()
-                view.setUserName(userName)
-                view.accountConnected()
+                prepareChooseAccount()
             }
         }
     }
@@ -60,7 +60,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     override fun logout() {
         launch {
             withDispatcherIO {
-                userLocalRepository.clearUserInfo()
+                userOrchestrator.logout()
             }
             calendarLocationOrchestrator.logout()
             view.setUserName("")
@@ -70,11 +70,11 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
     //region Utility API
     private suspend fun loadUserName() = withDispatcherIO {
-        userLocalRepository.loadUserName()
+        userOrchestrator.loadUserName()
     }
 
     private suspend fun saveUserInfo(userName: String) = withDispatcherIO {
-        userLocalRepository.saveUserName(userName)
+        userOrchestrator.saveUserName(userName)
     }
 
     private suspend fun loadLocations() = withDispatcherIO {

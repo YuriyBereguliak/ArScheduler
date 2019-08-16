@@ -1,7 +1,7 @@
 package com.bereguliak.arscheduler.domain.calendar.location
 
 import android.content.Context
-import com.bereguliak.arscheduler.data.local.user.UserLocalRepository
+import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.bereguliak.arscheduler.model.CalendarInfo
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class DefaultCalendarLocationOrchestrator @Inject constructor(private val context: Context,
                                                               private val jsonFactory: JsonFactory,
                                                               private val httpTransport: HttpTransport,
-                                                              private val userLocalRepository: UserLocalRepository)
+                                                              private val userOrchestrator: UserOrchestrator)
     : CalendarLocationOrchestrator {
 
     private var credential: GoogleAccountCredential? = null
@@ -26,7 +26,7 @@ class DefaultCalendarLocationOrchestrator @Inject constructor(private val contex
         credential = GoogleAccountCredential
                 .usingOAuth2(context, setOf(CalendarScopes.CALENDAR_READONLY))
                 .setBackOff(ExponentialBackOff())
-                .setSelectedAccountName(userLocalRepository.loadUserName())
+                .setSelectedAccountName(userOrchestrator.loadUserName())
 
         client = Calendar.Builder(httpTransport, jsonFactory, credential)
                 .setApplicationName("BereguliakArScheduler")
