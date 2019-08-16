@@ -1,4 +1,4 @@
-package com.bereguliak.arscheduler.utilities
+package com.bereguliak.arscheduler.utilities.extensions
 
 import android.content.Context
 import android.content.ContextWrapper

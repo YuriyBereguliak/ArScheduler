@@ -10,7 +10,7 @@ import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.bereguliak.arscheduler.ui.fragments.connection.adapter.UserCalendarsAdapter
-import com.bereguliak.arscheduler.utilities.toast
+import com.bereguliak.arscheduler.utilities.extensions.toast
 import com.google.android.gms.common.AccountPicker
 import com.google.api.client.googleapis.extensions.android.accounts.GoogleAccountManager
 import dagger.android.support.AndroidSupportInjection
