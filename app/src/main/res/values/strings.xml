@@ -7,4 +7,8 @@
     <string name="loading_status_network_connection_check">Checking network connection</string>
     <string name="text_fragment_connection_user_hint">User</string>
     <!--endregion-->
+
+    <!--region Loading screen -->
+    <string name="text_connection_logout_from_previous">Logout from previous account</string>
+    <!--endregion-->
 </resources>

@@ -17,7 +17,12 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
     //region ConnectionContract.Presenter
     override fun prepareChooseAccount() {
-        view.chooseAccount()
+        launch {
+            when (withDispatcherIO { userOrchestrator.isUserSignedIn() }) {
+                true -> view.chooseAccountNotAllowed()
+                false -> view.chooseAccount()
+            }
+        }
     }
 
     override fun loadUserInfo() {

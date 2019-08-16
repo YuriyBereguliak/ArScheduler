@@ -8,6 +8,8 @@ interface ConnectionContract {
     interface View {
         fun chooseAccount()
 
+        fun chooseAccountNotAllowed()
+
         fun setUserName(user: String)
 
         fun accountConnected()
