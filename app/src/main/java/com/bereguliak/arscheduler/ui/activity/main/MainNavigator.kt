@@ -6,6 +6,7 @@ import android.support.annotation.UiThread
 interface MainNavigator {
     fun showLoadingScreen()
     fun showConnectionScreen()
+    fun showCalendarDetailsScreen(calendar: String)
     fun showArSchedulerScreen()
     fun showSettingsScreen()
 }
