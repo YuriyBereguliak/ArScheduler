@@ -55,6 +55,9 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
                 view.showNoNetworkError()
                 return@launch
             }
+
+            view.hideNoNetworkError()
+
             try {
                 view.showLoading()
 

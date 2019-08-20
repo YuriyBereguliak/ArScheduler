@@ -47,6 +47,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         userIcon.setOnClickListener {
             presenter.prepareChooseAccount()
         }
+        connectionNoNetworkImageView.setOnClickListener {
+            presenter.startDownloadDataFromCalendar()
+        }
 
         presenter.loadUserInfo()
     }
@@ -110,7 +113,11 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     }
 
     override fun showNoNetworkError() {
-        toast("No network")
+        connectionNoNetworkImageView.visibility = View.VISIBLE
+    }
+
+    override fun hideNoNetworkError() {
+        connectionNoNetworkImageView.visibility = View.GONE
     }
     //endregion
 

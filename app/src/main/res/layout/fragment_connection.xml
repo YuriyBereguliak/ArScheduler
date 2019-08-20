@@ -114,12 +114,28 @@
     <ProgressBar
         android:id="@+id/userCalendarLoader"
         android:layout_width="0dp"
-        android:layout_height="35dp"
+        android:layout_height="@dimen/height_fragment_connection_loader"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/connectionNoNetworkImageView"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_fragment_connection_no_network"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_no_network"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:ignore="ContentDescription"
         tools:visibility="visible" />
 
     <android.support.design.widget.FloatingActionButton
