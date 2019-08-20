@@ -5,6 +5,7 @@ import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrche
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
+import com.bereguliak.arscheduler.utilities.network.NetworkUtils
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import com.google.api.services.calendar.model.CalendarList
 import kotlinx.coroutines.launch
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
                                               private val calendarLocationOrchestrator: CalendarLocationOrchestrator,
-                                              private val userOrchestrator: UserOrchestrator)
+                                              private val userOrchestrator: UserOrchestrator,
+                                              private val networkUtils: NetworkUtils)
     : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
     //region ConnectionContract.Presenter
@@ -49,6 +51,10 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
     override fun startDownloadDataFromCalendar() {
         launch {
+            networkUtils.isConnectionAvailable().takeUnless { it }?.let {
+                view.showNoNetworkError()
+                return@launch
+            }
             try {
                 view.showLoading()
 

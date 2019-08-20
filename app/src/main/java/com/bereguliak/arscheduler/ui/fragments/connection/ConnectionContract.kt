@@ -10,6 +10,8 @@ interface ConnectionContract {
 
         fun hideLoading()
 
+        fun showNoNetworkError()
+
         fun chooseAccount()
 
         fun chooseAccountNotAllowed()

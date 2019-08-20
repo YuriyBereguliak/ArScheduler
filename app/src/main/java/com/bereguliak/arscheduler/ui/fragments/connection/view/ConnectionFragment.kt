@@ -108,6 +108,10 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     override fun showUserCalendarLocations(data: MutableList<CalendarLocation>) {
         adapter.data = data
     }
+
+    override fun showNoNetworkError() {
+        toast("No network")
+    }
     //endregion
 
     //region Utility API
