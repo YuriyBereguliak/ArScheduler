@@ -47,6 +47,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         userIcon.setOnClickListener {
             presenter.prepareChooseAccount()
         }
+        connectionNoNetworkImageView.setOnClickListener {
+            presenter.startDownloadDataFromCalendar()
+        }
 
         presenter.loadUserInfo()
     }
@@ -107,6 +110,14 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
 
     override fun showUserCalendarLocations(data: MutableList<CalendarLocation>) {
         adapter.data = data
+    }
+
+    override fun showNoNetworkError() {
+        connectionNoNetworkImageView.visibility = View.VISIBLE
+    }
+
+    override fun hideNoNetworkError() {
+        connectionNoNetworkImageView.visibility = View.GONE
     }
     //endregion
 

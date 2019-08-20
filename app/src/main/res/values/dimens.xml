@@ -21,4 +21,9 @@
     <dimen name="textsize_all_display_4">112dp</dimen>
 
     <dimen name="height_divider">2dp</dimen>
+
+    <!--#region Connection-->
+    <dimen name="height_fragment_connection_no_network">100dp</dimen>
+    <dimen name="height_fragment_connection_loader">35dp</dimen>
+    <!--#endregion-->
 </resources>
