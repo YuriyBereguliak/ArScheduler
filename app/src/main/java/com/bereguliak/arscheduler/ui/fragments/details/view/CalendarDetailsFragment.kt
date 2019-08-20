@@ -5,15 +5,20 @@ import android.support.annotation.LayoutRes
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
 class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
+
+    @Inject
+    lateinit var presenter: CalendarDetailsContract.Presenter
 
     //region BaseFragment
     @LayoutRes
     override fun getContentViewId() = R.layout.fragment_calendar_details
 
     override fun initView() {
-
+        AndroidSupportInjection.inject(this)
     }
     //endregion
 

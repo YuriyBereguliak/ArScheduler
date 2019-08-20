@@ -1,9 +1,13 @@
 package com.bereguliak.arscheduler.di.component
 
 import com.bereguliak.arscheduler.App
+import com.bereguliak.arscheduler.di.module.GoogleApiModule
+import com.bereguliak.arscheduler.di.module.UtilityModule
 import com.bereguliak.arscheduler.di.module.app.AppModule
 import com.bereguliak.arscheduler.di.module.connection.ConnectionModule
+import com.bereguliak.arscheduler.di.module.connection.DomainModule
 import com.bereguliak.arscheduler.di.module.data.local.LocalRepositoryModule
+import com.bereguliak.arscheduler.di.module.details.CalendarDetailsModule
 import com.bereguliak.arscheduler.di.module.loading.LoadingModule
 import com.bereguliak.arscheduler.di.scope.AppScope
 import dagger.BindsInstance
@@ -20,7 +24,11 @@ import javax.inject.Singleton
             AppModule::class,
             LocalRepositoryModule::class,
             ConnectionModule::class,
-            LoadingModule::class]
+            CalendarDetailsModule::class,
+            LoadingModule::class,
+            DomainModule::class,
+            GoogleApiModule::class,
+            UtilityModule::class]
 )
 @Singleton
 interface AppComponent {

@@ -10,13 +10,10 @@ import dagger.Binds
 import dagger.Module
 
 @Module
-interface ConnectionIncludeModule {
+interface DomainModule {
     @Binds
     fun bindsCalendarLocationOrchestrator(orchestrator: DefaultCalendarLocationOrchestrator): CalendarLocationOrchestrator
 
     @Binds
     fun bindsUserOrchestrator(orchestrator: DefaultUserOrchestrator): UserOrchestrator
-
-    @Binds
-    fun bindsNetworkUtils(utils: DefaultNetworkUtils): NetworkUtils
 }
