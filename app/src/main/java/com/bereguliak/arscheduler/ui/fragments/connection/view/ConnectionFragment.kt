@@ -97,7 +97,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
         userLogout.visibility = View.VISIBLE
         userNameHint.visibility = View.VISIBLE
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_sync)
-        presenter.startDownloadDataFromCalendar()
+        adapter.data.isNullOrEmpty().takeIf { it }?.let {
+            presenter.startDownloadDataFromCalendar()
+        }
     }
 
     override fun authorizationRequired(intent: Intent) {

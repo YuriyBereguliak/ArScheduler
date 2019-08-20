@@ -101,7 +101,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
     private suspend fun mappingLocations(result: CalendarList?) = withDispatcherIO {
         result?.items?.map { entry ->
-            CalendarLocation(entry.id, entry.summary)
+            CalendarLocation(entry.id, entry.summary, entry.backgroundColor)
         }?.toMutableList() ?: mutableListOf()
     }
     //endregion

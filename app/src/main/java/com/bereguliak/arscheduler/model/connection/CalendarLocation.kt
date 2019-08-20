@@ -1,3 +1,3 @@
 package com.bereguliak.arscheduler.model.connection
 
-data class CalendarLocation(val id: String, val summary: String)
+data class CalendarLocation(val id: String, val summary: String, val backgroundColor: String)

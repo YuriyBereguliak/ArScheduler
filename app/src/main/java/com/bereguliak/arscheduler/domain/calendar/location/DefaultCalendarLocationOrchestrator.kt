@@ -2,7 +2,6 @@ package com.bereguliak.arscheduler.domain.calendar.location
 
 import android.content.Context
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
-import com.bereguliak.arscheduler.model.CalendarInfo
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
@@ -34,12 +33,19 @@ class DefaultCalendarLocationOrchestrator @Inject constructor(private val contex
     }
 
     override suspend fun loadLocations(): CalendarList? {
-        return client?.calendarList()?.list()?.setFields(CalendarInfo.FEED_FIELDS)?.execute()
+        return client?.calendarList()?.list()?.setFields(FEED_FIELDS)?.execute()
     }
 
     override fun logout() {
         credential = null
         client = null
+    }
+    //endregion
+
+    //region Utility structure
+    companion object {
+        private const val FIELDS = "id, summary, backgroundColor"
+        private const val FEED_FIELDS = "items($FIELDS)"
     }
     //endregion
 }
