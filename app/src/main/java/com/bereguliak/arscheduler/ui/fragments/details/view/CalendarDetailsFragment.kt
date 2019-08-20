@@ -21,6 +21,7 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
 
     override fun initView() {
         AndroidSupportInjection.inject(this)
+        initBackButtonClickListener()
         initRoom()
     }
     //endregion
@@ -31,6 +32,12 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
             val info = args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)
             calendarSummaryTextView.text = info.summary
             calendarSummaryTextView.setBackgroundColor(info.color())
+        }
+    }
+
+    private fun initBackButtonClickListener() {
+        calendarSummaryBackButton.setOnClickListener {
+            activity?.onBackPressed()
         }
     }
     //endregion
