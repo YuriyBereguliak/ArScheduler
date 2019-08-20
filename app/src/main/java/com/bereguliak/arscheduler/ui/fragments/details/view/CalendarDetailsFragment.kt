@@ -7,6 +7,7 @@ import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.model.connection.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.android.synthetic.main.fragment_calendar_details.*
 import javax.inject.Inject
 
 class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
@@ -20,18 +21,29 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
 
     override fun initView() {
         AndroidSupportInjection.inject(this)
+        initRoom()
+    }
+    //endregion
+
+    //region Utility API
+    private fun initRoom() {
+        arguments?.let { args ->
+            val info = args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)
+            calendarSummaryTextView.text = info.summary
+            calendarSummaryTextView.setBackgroundColor(info.color())
+        }
     }
     //endregion
 
     //region Utility structure
     companion object {
 
-        private const val ARG_CALENDAR_NAME = "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_NAME"
+        private const val ARG_CALENDAR_INFO = "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_INFO"
 
         fun newInstance(calendar: CalendarLocation): CalendarDetailsFragment {
             return CalendarDetailsFragment().apply {
                 arguments = Bundle(1).apply {
-                    putString(ARG_CALENDAR_NAME, calendar.summary)
+                    putParcelable(ARG_CALENDAR_INFO, calendar)
                 }
             }
         }
