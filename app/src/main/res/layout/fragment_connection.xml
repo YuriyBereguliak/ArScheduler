@@ -111,6 +111,17 @@
         app:layout_constraintTop_toTopOf="@+id/guideline2"
         tools:listitem="@layout/item_calendar_locations" />
 
+    <ProgressBar
+        android:id="@+id/userCalendarLoader"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        tools:visibility="visible" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fragmentConnectionGoToArButton"
         style="@style/Widget.MaterialComponents.FloatingActionButton"

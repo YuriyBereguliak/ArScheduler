@@ -50,6 +50,8 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     override fun startDownloadDataFromCalendar() {
         launch {
             try {
+                view.showLoading()
+
                 val result = loadLocations()
                 view.userCalendarsLoaded()
 
@@ -58,6 +60,8 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
 
             } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
                 view.authorizationRequired(recoverableAuthIOException.intent)
+            } finally {
+                view.hideLoading()
             }
         }
     }

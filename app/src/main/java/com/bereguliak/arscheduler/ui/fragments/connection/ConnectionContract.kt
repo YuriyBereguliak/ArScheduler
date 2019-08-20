@@ -6,6 +6,10 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 
 interface ConnectionContract {
     interface View {
+        fun showLoading()
+
+        fun hideLoading()
+
         fun chooseAccount()
 
         fun chooseAccountNotAllowed()

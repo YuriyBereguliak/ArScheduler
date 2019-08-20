@@ -68,6 +68,14 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
     //endregion
 
     //region ConnectionContract.View
+    override fun showLoading() {
+        userCalendarLoader.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        userCalendarLoader.visibility = View.GONE
+    }
+
     override fun chooseAccount() {
         val intent = AccountPicker.newChooseAccountIntent(null, null, arrayOf(GoogleAccountManager.ACCOUNT_TYPE), true, null, null, null, null)
         startActivityForResult(intent, REQUEST_ACCOUNT_PICKER)
