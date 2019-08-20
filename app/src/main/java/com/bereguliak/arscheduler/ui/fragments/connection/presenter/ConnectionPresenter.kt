@@ -3,7 +3,7 @@ package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrchestrator
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.bereguliak.arscheduler.utilities.network.NetworkUtils
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException

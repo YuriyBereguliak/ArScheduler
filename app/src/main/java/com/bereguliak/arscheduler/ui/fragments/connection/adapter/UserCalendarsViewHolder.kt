@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.bereguliak.arscheduler.R
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 
 class UserCalendarsViewHolder(itemView: View,
                               private val clickListener: OnUserCalendarClickListener?)

@@ -1,4 +1,4 @@
-package com.bereguliak.arscheduler.model.connection
+package com.bereguliak.arscheduler.model
 
 import android.graphics.Color
 import android.os.Parcel

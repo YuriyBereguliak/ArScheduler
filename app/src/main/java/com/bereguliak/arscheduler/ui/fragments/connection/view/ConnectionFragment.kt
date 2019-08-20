@@ -7,7 +7,7 @@ import android.support.annotation.LayoutRes
 import android.view.View
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.bereguliak.arscheduler.ui.fragments.connection.adapter.OnUserCalendarClickListener
 import com.bereguliak.arscheduler.ui.fragments.connection.adapter.UserCalendarsAdapter

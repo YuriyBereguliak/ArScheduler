@@ -1,7 +1,7 @@
 package com.bereguliak.arscheduler.ui.activity.main
 
 import android.support.annotation.UiThread
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 
 @UiThread
 interface MainNavigator {

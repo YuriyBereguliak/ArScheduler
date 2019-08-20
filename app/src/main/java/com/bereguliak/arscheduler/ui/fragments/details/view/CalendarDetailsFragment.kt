@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_calendar_details.*

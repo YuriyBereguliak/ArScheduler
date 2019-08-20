@@ -3,7 +3,7 @@ package com.bereguliak.arscheduler.ui.activity.main
 import android.support.annotation.LayoutRes
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseActivity
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.ar.view.ArScheduleFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.view.ConnectionFragment
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarDetailsFragment
