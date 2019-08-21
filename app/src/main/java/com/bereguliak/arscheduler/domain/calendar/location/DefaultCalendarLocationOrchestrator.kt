@@ -9,6 +9,7 @@ import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
 import com.google.api.services.calendar.model.CalendarList
+import com.google.api.services.calendar.model.Events
 import javax.inject.Inject
 
 class DefaultCalendarLocationOrchestrator @Inject constructor(private val context: Context,
@@ -33,7 +34,13 @@ class DefaultCalendarLocationOrchestrator @Inject constructor(private val contex
     }
 
     override suspend fun loadLocations(): CalendarList? {
-        return client?.calendarList()?.list()?.setFields(FEED_FIELDS)?.execute()
+        return client?.calendarList()?.list()?.setFields(CALENDAR_FIELDS)?.execute()
+    }
+
+    override suspend fun loadEvents(calendarId: String): Events? {
+        return client?.events()?.list(calendarId)
+                ?.setFields(EVENTS_FIELDS)
+                ?.execute()
     }
 
     override fun logout() {
@@ -44,8 +51,8 @@ class DefaultCalendarLocationOrchestrator @Inject constructor(private val contex
 
     //region Utility structure
     companion object {
-        private const val FIELDS = "id, summary, backgroundColor"
-        private const val FEED_FIELDS = "items($FIELDS)"
+        private const val CALENDAR_FIELDS = "items(id, summary, backgroundColor)"
+        private const val EVENTS_FIELDS = "items(attachments,attendees,colorId,description,end,endTimeUnspecified,id,originalStartTime,source,start,status,summary)"
     }
     //endregion
 }

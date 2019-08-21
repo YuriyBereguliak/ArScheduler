@@ -32,6 +32,7 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
             args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)?.let { info ->
                 calendarSummaryTextView.text = info.summary
                 calendarSummaryTextView.setBackgroundColor(info.color())
+                presenter.loadEvents(info)
             }
         }
     }

@@ -5,7 +5,7 @@ import com.bereguliak.arscheduler.di.module.GoogleApiModule
 import com.bereguliak.arscheduler.di.module.UtilityModule
 import com.bereguliak.arscheduler.di.module.app.AppModule
 import com.bereguliak.arscheduler.di.module.connection.ConnectionModule
-import com.bereguliak.arscheduler.di.module.connection.DomainModule
+import com.bereguliak.arscheduler.di.module.DomainModule
 import com.bereguliak.arscheduler.di.module.data.local.LocalRepositoryModule
 import com.bereguliak.arscheduler.di.module.details.CalendarDetailsModule
 import com.bereguliak.arscheduler.di.module.loading.LoadingModule
