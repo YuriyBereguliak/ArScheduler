@@ -28,6 +28,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:padding="@dimen/margin_all_small"
         android:src="@drawable/ic_chevron_left"
         app:layout_constraintBottom_toBottomOf="@+id/calendarSummaryTextView"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,4 +43,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendarSummaryTextView" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/calendarDetailsEventRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
 </android.support.constraint.ConstraintLayout>
