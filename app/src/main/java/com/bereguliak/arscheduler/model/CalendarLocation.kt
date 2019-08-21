@@ -6,9 +6,9 @@ import android.os.Parcelable
 
 data class CalendarLocation(val id: String, val summary: String, val backgroundColor: String) : Parcelable {
     constructor(source: Parcel) : this(
-            source.readString(),
-            source.readString(),
-            source.readString()
+            source.readString() ?: "",
+            source.readString() ?: "",
+            source.readString() ?: ""
     )
 
     fun color() = try {
@@ -27,8 +27,9 @@ data class CalendarLocation(val id: String, val summary: String, val backgroundC
     }
     //endregion
 
-    //region Utility strcuture
+    //region Utility structure
     companion object {
+        @Suppress("unused")
         @JvmField
         val CREATOR: Parcelable.Creator<CalendarLocation> = object : Parcelable.Creator<CalendarLocation> {
             override fun createFromParcel(source: Parcel): CalendarLocation = CalendarLocation(source)

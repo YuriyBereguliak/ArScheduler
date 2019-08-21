@@ -29,9 +29,10 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
     //region Utility API
     private fun initRoom() {
         arguments?.let { args ->
-            val info = args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)
-            calendarSummaryTextView.text = info.summary
-            calendarSummaryTextView.setBackgroundColor(info.color())
+            args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)?.let { info ->
+                calendarSummaryTextView.text = info.summary
+                calendarSummaryTextView.setBackgroundColor(info.color())
+            }
         }
     }
 
