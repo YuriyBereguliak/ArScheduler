@@ -1,6 +1,7 @@
 package com.bereguliak.arscheduler.domain.calendar.location
 
 import android.content.Context
+import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
@@ -29,7 +30,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
                 .setSelectedAccountName(userOrchestrator.loadUserName())
 
         client = Calendar.Builder(httpTransport, jsonFactory, credential)
-                .setApplicationName("BereguliakArScheduler")
+                .setApplicationName(context.getString(R.string.app_name))
                 .build()
     }
 
