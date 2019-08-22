@@ -1,7 +1,7 @@
 package com.bereguliak.arscheduler.di.module
 
-import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrchestrator
-import com.bereguliak.arscheduler.domain.calendar.location.DefaultCalendarLocationOrchestrator
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
+import com.bereguliak.arscheduler.domain.calendar.location.DefaultCalendarOrchestrator
 import com.bereguliak.arscheduler.domain.user.DefaultUserOrchestrator
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import dagger.Binds
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 interface DomainModule {
     @Binds
     @Singleton
-    fun bindsCalendarLocationOrchestrator(orchestrator: DefaultCalendarLocationOrchestrator): CalendarLocationOrchestrator
+    fun bindsCalendarLocationOrchestrator(orchestrator: DefaultCalendarOrchestrator): CalendarOrchestrator
 
     @Binds
     fun bindsUserOrchestrator(orchestrator: DefaultUserOrchestrator): UserOrchestrator

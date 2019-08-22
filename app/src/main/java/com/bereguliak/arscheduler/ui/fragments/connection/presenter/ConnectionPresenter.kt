@@ -1,7 +1,7 @@
 package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
-import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrchestrator
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
-                                              private val calendarLocationOrchestrator: CalendarLocationOrchestrator,
+                                              private val calendarOrchestrator: CalendarOrchestrator,
                                               private val userOrchestrator: UserOrchestrator,
                                               private val networkUtils: NetworkUtils)
     : BaseCoroutinePresenter(), ConnectionContract.Presenter {
@@ -31,7 +31,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
         launch(exceptionHandler) {
             if (userOrchestrator.isUserSignedIn()) {
                 loadUserName()?.let { userName ->
-                    calendarLocationOrchestrator.initUserAccount()
+                    calendarOrchestrator.initUserAccount()
                     view.setUserName(userName)
                     view.accountConnected()
                 }
@@ -44,7 +44,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     override fun userAccountSelected(userName: String) {
         launch {
             saveUserInfo(userName)
-            calendarLocationOrchestrator.initUserAccount()
+            calendarOrchestrator.initUserAccount()
             startDownloadDataFromCalendar()
         }
     }
@@ -80,7 +80,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
             withDispatcherIO {
                 userOrchestrator.logout()
             }
-            calendarLocationOrchestrator.logout()
+            calendarOrchestrator.logout()
             view.setUserName("")
         }
     }
@@ -96,7 +96,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
     }
 
     private suspend fun loadLocations() = withDispatcherIO {
-        calendarLocationOrchestrator.loadLocations()
+        calendarOrchestrator.loadLocations()
     }
 
     private suspend fun mappingLocations(result: CalendarList?) = withDispatcherIO {

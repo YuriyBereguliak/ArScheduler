@@ -1,7 +1,7 @@
 package com.bereguliak.arscheduler.ui.fragments.details.presenter
 
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
-import com.bereguliak.arscheduler.domain.calendar.location.CalendarLocationOrchestrator
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
@@ -10,11 +10,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDetailsContract.View,
-                                                   private val calendarLocationOrchestrator: CalendarLocationOrchestrator)
+                                                   private val calendarOrchestrator: CalendarOrchestrator)
     : BaseCoroutinePresenter(), CalendarDetailsContract.Presenter {
 
     init {
-        calendarLocationOrchestrator.initUserAccount()
+        calendarOrchestrator.initUserAccount()
     }
 
     //region CalendarDetailsContract.Presenter
@@ -28,7 +28,7 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
 
     //region Utility API
     private suspend fun loadEventsByCalendarId(id: String): Events? = withDispatcherIO {
-        calendarLocationOrchestrator.loadEvents(id)
+        calendarOrchestrator.loadEvents(id)
     }
     //endregion
 }

@@ -12,16 +12,16 @@ import com.google.api.services.calendar.model.CalendarList
 import com.google.api.services.calendar.model.Events
 import javax.inject.Inject
 
-class DefaultCalendarLocationOrchestrator @Inject constructor(private val context: Context,
-                                                              private val jsonFactory: JsonFactory,
-                                                              private val httpTransport: HttpTransport,
-                                                              private val userOrchestrator: UserOrchestrator)
-    : CalendarLocationOrchestrator {
+class DefaultCalendarOrchestrator @Inject constructor(private val context: Context,
+                                                      private val jsonFactory: JsonFactory,
+                                                      private val httpTransport: HttpTransport,
+                                                      private val userOrchestrator: UserOrchestrator)
+    : CalendarOrchestrator {
 
     private var credential: GoogleAccountCredential? = null
     private var client: Calendar? = null
 
-    //region CalendarLocationOrchestrator
+    //region CalendarOrchestrator
     override fun initUserAccount() {
         credential = GoogleAccountCredential
                 .usingOAuth2(context, setOf(CalendarScopes.CALENDAR_READONLY))
