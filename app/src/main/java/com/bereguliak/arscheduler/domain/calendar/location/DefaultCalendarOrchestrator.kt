@@ -50,6 +50,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
                 ?.setTimeMin(DateTime(start.time, TimeZone.getDefault()))
                 ?.setTimeMax(DateTime(end.time, TimeZone.getDefault()))
                 ?.setShowDeleted(false)
+                ?.setOrderBy("startTime")
                 ?.setSingleEvents(true)
                 ?.execute()
     }
