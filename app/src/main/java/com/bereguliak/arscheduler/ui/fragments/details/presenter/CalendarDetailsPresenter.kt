@@ -6,6 +6,7 @@ import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
 import com.google.api.services.calendar.model.Events
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,16 +20,33 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
 
     //region CalendarDetailsContract.Presenter
     override fun loadEvents(info: CalendarLocation) {
-        launch {
+        val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            exception.message?.let { L.e(it) }
+        }
+        launch(exceptionHandler) {
             val events = loadEventsByCalendarId(info.id)
-            L.d(events?.toPrettyString() ?: "")
+            if (events == null) {
+                view.showNoEventsResult()
+            } else {
+                val filter = filterConfirmedEvents(events)
+                view.showEvents(filter)
+            }
         }
     }
     //endregion
 
     //region Utility API
     private suspend fun loadEventsByCalendarId(id: String): Events? = withDispatcherIO {
-        calendarOrchestrator.loadEvents(id)
+        calendarOrchestrator.loadEventsForCurrentDay(id)
+    }
+
+    private suspend fun filterConfirmedEvents(events: Events) = withDispatcherIO {
+        events.items.filter { it.status == EventStatusType.CONFIRMED.type }
     }
     //endregion
+}
+
+enum class EventStatusType(val type: String) {
+    CONFIRMED("confirmed"),
+    CANCELED("cancelled")
 }

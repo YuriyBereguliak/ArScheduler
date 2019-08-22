@@ -3,14 +3,18 @@ package com.bereguliak.arscheduler.domain.calendar.location
 import android.content.Context
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
+import com.bereguliak.arscheduler.utilities.extensions.setEndOfTheDay
+import com.bereguliak.arscheduler.utilities.extensions.setStartOfTheDay
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
 import com.google.api.client.http.HttpTransport
 import com.google.api.client.json.JsonFactory
+import com.google.api.client.util.DateTime
 import com.google.api.client.util.ExponentialBackOff
 import com.google.api.services.calendar.Calendar
 import com.google.api.services.calendar.CalendarScopes
 import com.google.api.services.calendar.model.CalendarList
 import com.google.api.services.calendar.model.Events
+import java.util.*
 import javax.inject.Inject
 
 class DefaultCalendarOrchestrator @Inject constructor(private val context: Context,
@@ -38,9 +42,15 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
         return client?.calendarList()?.list()?.setFields(CALENDAR_FIELDS)?.execute()
     }
 
-    override suspend fun loadEvents(calendarId: String): Events? {
+    override suspend fun loadEventsForCurrentDay(calendarId: String): Events? {
+        val start = java.util.Calendar.getInstance().apply { setStartOfTheDay() }
+        val end = java.util.Calendar.getInstance().apply { setEndOfTheDay() }
         return client?.events()?.list(calendarId)
                 ?.setFields(EVENTS_FIELDS)
+                ?.setTimeMin(DateTime(start.time, TimeZone.getDefault()))
+                ?.setTimeMax(DateTime(end.time, TimeZone.getDefault()))
+                ?.setShowDeleted(false)
+                ?.setSingleEvents(true)
                 ?.execute()
     }
 

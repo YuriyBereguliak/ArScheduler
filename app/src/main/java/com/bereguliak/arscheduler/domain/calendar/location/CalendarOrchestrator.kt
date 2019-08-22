@@ -8,7 +8,7 @@ interface CalendarOrchestrator {
 
     suspend fun loadLocations(): CalendarList?
 
-    suspend fun loadEvents(calendarId: String): Events?
+    suspend fun loadEventsForCurrentDay(calendarId: String): Events?
 
     fun logout()
 }
