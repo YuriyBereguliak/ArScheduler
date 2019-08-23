@@ -13,6 +13,7 @@
         android:id="@+id/eventStartTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/textsize_all_body"
         app:layout_constraintBottom_toTopOf="@id/eventEndTime"
@@ -26,6 +27,7 @@
         android:id="@+id/eventEndTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/textsize_all_body"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +52,7 @@
         android:layout_marginStart="@dimen/margin_all_medium"
         android:maxLines="2"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="@dimen/textsize_all_title"
+        android:textSize="@dimen/textsize_all_body"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/eventGoToDetails"
         app:layout_constraintStart_toEndOf="@+id/view"
@@ -76,5 +78,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.2" />
 </android.support.constraint.ConstraintLayout>

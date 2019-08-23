@@ -3,6 +3,7 @@ package com.bereguliak.arscheduler.ui.fragments.details.presenter
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
+import com.bereguliak.arscheduler.model.enum.EventStatusType
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
 import com.google.api.services.calendar.model.Events
@@ -14,10 +15,6 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
                                                    private val calendarOrchestrator: CalendarOrchestrator)
     : BaseCoroutinePresenter(), CalendarDetailsContract.Presenter {
 
-    init {
-        calendarOrchestrator.initUserAccount()
-    }
-
     //region CalendarDetailsContract.Presenter
     override fun loadEvents(info: CalendarLocation) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
@@ -28,7 +25,7 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
             if (events == null) {
                 view.showNoEventsResult()
             } else {
-                val filter = filterConfirmedEvents(events)
+                val filter = prepareResultEvents(events)
                 view.showEvents(filter)
             }
         }
@@ -40,13 +37,14 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
         calendarOrchestrator.loadEventsForCurrentDay(id)
     }
 
-    private suspend fun filterConfirmedEvents(events: Events) = withDispatcherIO {
-        events.items.filter { it.status == EventStatusType.CONFIRMED.type }
+    private suspend fun prepareResultEvents(events: Events) = withDispatcherIO {
+        events.items.filter {
+            it.status == EventStatusType.CONFIRMED.type
+        }.filter {
+            !it.summary.isNullOrEmpty()
+        }.sortedBy {
+            it.start.dateTime.value
+        }
     }
     //endregion
-}
-
-enum class EventStatusType(val type: String) {
-    CONFIRMED("confirmed"),
-    CANCELED("cancelled")
 }
