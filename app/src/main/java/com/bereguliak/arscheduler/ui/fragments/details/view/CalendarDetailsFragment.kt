@@ -63,6 +63,14 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
     override fun showNoEventsResult() {
         calendarDetailsEmptyViewContainer.visibility = View.VISIBLE
     }
+
+    override fun showLoading() {
+        calendarDetailsLoader.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        calendarDetailsLoader.visibility = View.GONE
+    }
     //endregion
 
     //region Utility structure

@@ -55,6 +55,17 @@
         tools:itemCount="8"
         tools:listitem="@layout/item_calendar_event" />
 
+    <ProgressBar
+        android:id="@+id/calendarDetailsLoader"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_fragment_connection_loader"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:visibility="visible" />
+
     <LinearLayout
         android:id="@+id/calendarDetailsEmptyViewContainer"
         android:layout_width="0dp"

@@ -8,6 +8,10 @@ interface CalendarDetailsContract {
         fun showEvents(events: List<CalendarEvent>)
 
         fun showNoEventsResult()
+
+        fun showLoading()
+
+        fun hideLoading()
     }
 
     interface Presenter {
