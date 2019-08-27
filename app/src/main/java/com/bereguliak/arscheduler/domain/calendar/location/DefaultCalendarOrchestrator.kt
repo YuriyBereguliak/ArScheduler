@@ -47,6 +47,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
         val end = java.util.Calendar.getInstance().apply { setEndOfTheDay() }
         return client?.events()?.list(calendarId)
                 ?.setFields(EVENTS_FIELDS)
+                ?.setTimeZone(DEFAULT_TIMEZONE)
                 ?.setTimeMin(DateTime(start.time, TimeZone.getDefault()))
                 ?.setTimeMax(DateTime(end.time, TimeZone.getDefault()))
                 ?.setShowDeleted(false)
@@ -63,6 +64,8 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
 
     //region Utility structure
     companion object {
+        private const val DEFAULT_TIMEZONE = "Europe/Kiev"
+
         private const val CALENDAR_FIELDS = "items(id, summary, backgroundColor)"
         private const val EVENTS_FIELDS = "items(attachments,attendees,colorId,description,end,endTimeUnspecified,id,originalStartTime,source,start,status,summary)"
     }

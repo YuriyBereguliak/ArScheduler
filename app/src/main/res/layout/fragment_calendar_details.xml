@@ -25,7 +25,6 @@
         android:id="@+id/calendarSummaryBackButton"
         android:layout_width="48dp"
         android:layout_height="0dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/margin_all_small"
