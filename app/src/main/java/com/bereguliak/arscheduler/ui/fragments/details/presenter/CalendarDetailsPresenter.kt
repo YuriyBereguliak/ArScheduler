@@ -55,8 +55,8 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
         CalendarEvent(event.id,
                 event.summary,
                 event.description,
-                getDateTime(event.start.dateTime)?.time ?: 0L,
-                getDateTime(event.end.dateTime)?.time ?: 0L,
+                event.start.dateTime.value,
+                event.end.dateTime.value,
                 event.attendees.map {
                     EventAttendee(it.email, it.displayName)
                 })

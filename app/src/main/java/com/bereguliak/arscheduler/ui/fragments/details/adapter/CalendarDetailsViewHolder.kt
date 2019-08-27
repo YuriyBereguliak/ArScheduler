@@ -18,7 +18,7 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     fun bind(event: CalendarEvent) {
         title.text = event.title
 
-        val simpleDateFormat = SimpleDateFormat("HH:MM", Locale.getDefault())
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         startTime.text = simpleDateFormat.format(event.startTime)
         endTime.text = simpleDateFormat.format(event.endTime)
     }
