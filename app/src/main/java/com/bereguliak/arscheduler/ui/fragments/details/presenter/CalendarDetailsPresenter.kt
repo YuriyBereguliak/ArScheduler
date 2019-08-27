@@ -21,9 +21,11 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
     //region CalendarDetailsContract.Presenter
     override fun loadEvents(info: CalendarLocation) {
         val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+            view.hideLoading()
             exception.message?.let { L.e(it) }
         }
         launch(exceptionHandler) {
+            view.showLoading()
             val events = loadEventsByCalendarId(info.id)
             if (events == null || events.items.isEmpty()) {
                 view.showNoEventsResult()
@@ -31,6 +33,7 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
                 val filter = prepareResultEvents(events)
                 view.showEvents(filter)
             }
+            view.hideLoading()
         }
     }
     //endregion
