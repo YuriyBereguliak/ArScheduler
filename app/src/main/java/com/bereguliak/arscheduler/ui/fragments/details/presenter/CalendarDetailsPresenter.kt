@@ -2,10 +2,14 @@ package com.bereguliak.arscheduler.ui.fragments.details.presenter
 
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
+import com.bereguliak.arscheduler.model.CalendarEvent
 import com.bereguliak.arscheduler.model.CalendarLocation
+import com.bereguliak.arscheduler.model.EventAttendee
 import com.bereguliak.arscheduler.model.enum.EventStatusType
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
+import com.bereguliak.arscheduler.utilities.getDateTime
+import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.Events
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
@@ -44,7 +48,18 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
             !it.summary.isNullOrEmpty()
         }.sortedBy {
             it.start.dateTime.value
-        }
+        }.mapEvents()
+    }
+
+    private fun List<Event>.mapEvents(): List<CalendarEvent> = map { event ->
+        CalendarEvent(event.id,
+                event.summary,
+                event.description,
+                getDateTime(event.start.dateTime)?.time ?: 0L,
+                getDateTime(event.end.dateTime)?.time ?: 0L,
+                event.attendees.map {
+                    EventAttendee(it.email, it.displayName)
+                })
     }
     //endregion
 }

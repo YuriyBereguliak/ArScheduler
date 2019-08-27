@@ -4,11 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.model.CalendarEvent
 import com.google.api.services.calendar.model.Event
 
 class CalendarDetailsAdapter : RecyclerView.Adapter<CalendarDetailsViewHolder>() {
 
-    var data = mutableListOf<Event>()
+    var data = mutableListOf<CalendarEvent>()
         set(value) {
             field = value
             notifyDataSetChanged()
