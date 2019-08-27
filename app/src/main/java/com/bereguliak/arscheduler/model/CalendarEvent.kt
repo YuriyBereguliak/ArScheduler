@@ -8,4 +8,5 @@ data class CalendarEvent(val id: String,
                          val attendees: List<EventAttendee>)
 
 data class EventAttendee(val email: String,
-                         val displayName: String?)
+                         val displayName: String?,
+                         val response: String?)
