@@ -5,5 +5,14 @@
     <string name="loading_status_database_check">Checking databases</string>
     <string name="loading_status_calendar_connection_check">Initialize calendar</string>
     <string name="loading_status_network_connection_check">Checking network connection</string>
+    <string name="text_fragment_connection_user_hint">User</string>
+    <!--endregion-->
+
+    <!--region Loading screen -->
+    <string name="text_connection_logout_from_previous">Logout from previous account</string>
+    <!--endregion-->
+
+    <!--#region Details screen -->
+    <string name="text_details_empty">Empty calendar</string>
     <!--endregion-->
 </resources>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/margin_all_small"
+    android:paddingTop="@dimen/margin_all_medium"
+    android:paddingEnd="@dimen/margin_all_small"
+    android:paddingBottom="@dimen/margin_all_medium">
+
+    <TextView
+        android:id="@+id/eventStartTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/textsize_all_body"
+        app:layout_constraintBottom_toTopOf="@id/eventEndTime"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage"
+        tools:text="10:00" />
+
+    <TextView
+        android:id="@+id/eventEndTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/textsize_all_body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpUsage"
+        tools:text="10:30" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="@dimen/height_divider"
+        android:layout_height="0dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintBottom_toBottomOf="@id/eventEndTime"
+        app:layout_constraintStart_toStartOf="@id/guideline3"
+        app:layout_constraintTop_toTopOf="@id/eventStartTime" />
+
+    <TextView
+        android:id="@+id/eventTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_all_medium"
+        android:maxLines="2"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/textsize_all_body"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/eventGoToDetails"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpUsage"
+        tools:text="Title of event" />
+
+    <ImageView
+        android:id="@+id/eventGoToDetails"
+        android:layout_width="24dp"
+        android:layout_height="0dp"
+        android:rotation="180"
+        android:src="@drawable/ic_chevron_left"
+        android:tint="@color/colorPrimaryText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/eventTitle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+</android.support.constraint.ConstraintLayout>
