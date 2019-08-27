@@ -27,12 +27,12 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
         AndroidSupportInjection.inject(this)
         initAdapterForRecyclerView()
         initBackButtonClickListener()
-        initRoom()
+        initDataFromArgs()
     }
     //endregion
 
     //region Utility API
-    private fun initRoom() {
+    private fun initDataFromArgs() {
         arguments?.let { args ->
             args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)?.let { info ->
                 calendarSummaryTextView.text = info.summary
