@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bereguliak.arscheduler.R
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 
-class UserCalendarsAdapter : RecyclerView.Adapter<UserCalendarsViewHolder>() {
+class UserCalendarsAdapter(private val onUserCalendarClickListener: OnUserCalendarClickListener? = null) : RecyclerView.Adapter<UserCalendarsViewHolder>() {
 
     var data = mutableListOf<CalendarLocation>()
         set(value) {
@@ -17,7 +17,7 @@ class UserCalendarsAdapter : RecyclerView.Adapter<UserCalendarsViewHolder>() {
     //region RecyclerView
     override fun onCreateViewHolder(group: ViewGroup, position: Int): UserCalendarsViewHolder {
         val view = LayoutInflater.from(group.context).inflate(R.layout.item_calendar_locations, group, false)
-        return UserCalendarsViewHolder(view)
+        return UserCalendarsViewHolder(view, onUserCalendarClickListener)
     }
 
     override fun getItemCount() = data.size

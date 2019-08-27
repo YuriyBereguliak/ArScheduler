@@ -1,4 +1,4 @@
-package com.bereguliak.arscheduler.di.module.google
+package com.bereguliak.arscheduler.di.module
 
 import com.google.api.client.extensions.android.http.AndroidHttp
 import com.google.api.client.http.HttpTransport

@@ -7,8 +7,9 @@ import android.support.annotation.LayoutRes
 import android.view.View
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
+import com.bereguliak.arscheduler.ui.fragments.connection.adapter.OnUserCalendarClickListener
 import com.bereguliak.arscheduler.ui.fragments.connection.adapter.UserCalendarsAdapter
 import com.bereguliak.arscheduler.utilities.extensions.toast
 import com.google.android.gms.common.AccountPicker
@@ -17,12 +18,12 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_connection.*
 import javax.inject.Inject
 
-class ConnectionFragment : BaseFragment(), ConnectionContract.View {
+class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalendarClickListener {
 
     @Inject
     lateinit var presenter: ConnectionContract.Presenter
 
-    private val adapter: UserCalendarsAdapter by lazy { UserCalendarsAdapter() }
+    private val adapter: UserCalendarsAdapter by lazy { UserCalendarsAdapter(this) }
 
     //region BaseFragment
     @LayoutRes
@@ -96,7 +97,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
         userLogout.visibility = View.VISIBLE
         userNameHint.visibility = View.VISIBLE
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_sync)
-        presenter.startDownloadDataFromCalendar()
+        adapter.data.isNullOrEmpty().takeIf { it }?.let {
+            presenter.startDownloadDataFromCalendar()
+        }
     }
 
     override fun authorizationRequired(intent: Intent) {
@@ -118,6 +121,12 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View {
 
     override fun hideNoNetworkError() {
         connectionNoNetworkImageView.visibility = View.GONE
+    }
+    //endregion
+
+    //region OnUserCalendarClickListener
+    override fun onCalendarClickListener(calendar: CalendarLocation) {
+        navigator.showCalendarDetailsScreen(calendar)
     }
     //endregion
 

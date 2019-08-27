@@ -1,8 +1,7 @@
 package com.bereguliak.arscheduler.ui.fragments.connection
 
 import android.content.Intent
-import com.bereguliak.arscheduler.model.connection.CalendarLocation
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.bereguliak.arscheduler.model.CalendarLocation
 
 interface ConnectionContract {
     interface View {
