@@ -8,7 +8,6 @@ import com.bereguliak.arscheduler.model.EventAttendee
 import com.bereguliak.arscheduler.model.enum.EventStatusType
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
-import com.bereguliak.arscheduler.utilities.getDateTime
 import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.Events
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -26,7 +25,7 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
         }
         launch(exceptionHandler) {
             val events = loadEventsByCalendarId(info.id)
-            if (events == null) {
+            if (events == null || events.items.isEmpty()) {
                 view.showNoEventsResult()
             } else {
                 val filter = prepareResultEvents(events)

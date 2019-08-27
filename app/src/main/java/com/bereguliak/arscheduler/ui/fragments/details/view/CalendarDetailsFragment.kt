@@ -2,6 +2,7 @@ package com.bereguliak.arscheduler.ui.fragments.details.view
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.view.View
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.model.CalendarEvent
@@ -55,11 +56,12 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
 
     //region CalendarDetailsContract.View
     override fun showEvents(events: List<CalendarEvent>) {
+        calendarDetailsEmptyViewContainer.visibility = View.GONE
         adapter.data = events.toMutableList()
     }
 
     override fun showNoEventsResult() {
-
+        calendarDetailsEmptyViewContainer.visibility = View.VISIBLE
     }
     //endregion
 
@@ -67,7 +69,7 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
     companion object {
 
         private const val ARG_CALENDAR_INFO =
-            "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_INFO"
+                "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_INFO"
 
         fun newInstance(calendar: CalendarLocation): CalendarDetailsFragment {
             return CalendarDetailsFragment().apply {

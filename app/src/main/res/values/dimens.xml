@@ -26,4 +26,8 @@
     <dimen name="height_fragment_connection_no_network">100dp</dimen>
     <dimen name="height_fragment_connection_loader">35dp</dimen>
     <!--#endregion-->
+
+    <!--#region Details screen -->
+    <dimen name="size_fragment_details_empty_icon">72dp</dimen>
+    <!--#endregion-->
 </resources>
