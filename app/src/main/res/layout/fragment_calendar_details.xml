@@ -59,15 +59,28 @@
         android:id="@+id/calendarDetailsEmptyViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
+        tools:ignore="UseCompoundDrawables"
         tools:visibility="visible">
 
         <ImageView
+            android:layout_width="@dimen/size_fragment_details_empty_icon"
+            android:layout_height="@dimen/size_fragment_details_empty_icon"
+            android:src="@drawable/ic_empty_calendar"
+            tools:ignore="ContentDescription" />
+
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/text_details_empty"
+            android:textColor="@color/colorSecondaryText"
+            android:textSize="@dimen/textsize_all_body"
+            tools:ignore="SpUsage" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

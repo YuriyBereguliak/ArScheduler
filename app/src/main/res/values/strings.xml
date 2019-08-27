@@ -11,4 +11,8 @@
     <!--region Loading screen -->
     <string name="text_connection_logout_from_previous">Logout from previous account</string>
     <!--endregion-->
+
+    <!--#region Details screen -->
+    <string name="text_details_empty">Empty calendar</string>
+    <!--endregion-->
 </resources>
