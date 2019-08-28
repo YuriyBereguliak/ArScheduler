@@ -9,4 +9,5 @@ data class CalendarEvent(val id: String,
 
 data class EventAttendee(val email: String,
                          val displayName: String?,
-                         val response: String?)
+                         val response: String?,
+                         val isOrganizer: Boolean)

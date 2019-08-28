@@ -84,7 +84,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
                 event.description,
                 event.start.dateTime.value,
                 event.end.dateTime.value,
-                event.attendees.map { EventAttendee(it.email, it.displayName, it.responseStatus) })
+                event.attendees.map { EventAttendee(it.email, it.displayName, it.responseStatus, it.organizer) })
     }
     //endregion
 
