@@ -30,6 +30,11 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
         initBackButtonClickListener()
         initDataFromArgs()
     }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.unSubscribe()
+    }
     //endregion
 
     //region Utility API

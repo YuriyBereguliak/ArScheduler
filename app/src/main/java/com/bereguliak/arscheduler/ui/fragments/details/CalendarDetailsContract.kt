@@ -16,5 +16,7 @@ interface CalendarDetailsContract {
 
     interface Presenter {
         fun loadEvents(info: CalendarLocation)
+
+        fun unSubscribe()
     }
 }
