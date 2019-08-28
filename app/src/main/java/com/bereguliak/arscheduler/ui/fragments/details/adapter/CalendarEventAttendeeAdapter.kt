@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.model.AttendeeStatus
 import com.bereguliak.arscheduler.model.EventAttendee
 
 class CalendarEventAttendeeAdapter : RecyclerView.Adapter<CalendarEventAttendeeViewHolder>() {
@@ -41,6 +42,13 @@ class CalendarEventAttendeeViewHolder(itemView: View) : RecyclerView.ViewHolder(
     //region CalendarEventAttendeeViewHolder
     fun bind(attendee: EventAttendee) {
         attendeeName.text = attendee.getNameToDisplay()
+
+        attendeeResponseStatus.setImageResource(when (attendee.getStatus()) {
+            AttendeeStatus.ACCEPTED -> R.drawable.ic_done
+            AttendeeStatus.DECLINED -> R.drawable.ic_reject
+            AttendeeStatus.TENTATIVE -> R.drawable.ic_maybe
+            AttendeeStatus.NEED_ACTION -> R.drawable.ic_wait
+        })
     }
     //endregion
 }

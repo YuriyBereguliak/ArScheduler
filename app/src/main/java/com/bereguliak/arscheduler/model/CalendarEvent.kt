@@ -17,4 +17,18 @@ data class EventAttendee(val email: String,
         email.isNotEmpty() -> email
         else -> ""
     }
+
+    fun getStatus() = when (response) {
+        AttendeeStatus.ACCEPTED.value -> AttendeeStatus.ACCEPTED
+        AttendeeStatus.DECLINED.value -> AttendeeStatus.DECLINED
+        AttendeeStatus.TENTATIVE.value -> AttendeeStatus.TENTATIVE
+        else -> AttendeeStatus.NEED_ACTION
+    }
+}
+
+enum class AttendeeStatus(val value: String) {
+    ACCEPTED("accepted"),
+    DECLINED("declined"),
+    NEED_ACTION("needsAction"),
+    TENTATIVE("tentative")
 }

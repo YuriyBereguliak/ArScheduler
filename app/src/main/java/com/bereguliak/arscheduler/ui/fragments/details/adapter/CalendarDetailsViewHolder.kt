@@ -24,6 +24,7 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val descriptionIcon = itemView.findViewById<ImageView>(R.id.descriptionIconImageView)
 
     private val attendeeAdapter by lazy { CalendarEventAttendeeAdapter() }
+    private val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     init {
         itemView.findViewById<RecyclerView>(R.id.accountsRecyclerView).apply {
@@ -40,7 +41,6 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         handleEventDescription(event)
         handleEventOrganizer(event.organizer)
 
-        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         startTime.text = simpleDateFormat.format(event.startTime)
         endTime.text = simpleDateFormat.format(event.endTime)
 
