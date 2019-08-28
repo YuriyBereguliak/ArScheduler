@@ -22,6 +22,14 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val description = itemView.findViewById<TextView>(R.id.descriptionTextView)
     private val descriptionIcon = itemView.findViewById<ImageView>(R.id.descriptionIconImageView)
 
+    private val attendeeAdapter by lazy { CalendarEventAttendeeAdapter() }
+
+    init {
+        itemView.findViewById<RecyclerView>(R.id.accountsRecyclerView).apply {
+            adapter = attendeeAdapter
+        }
+    }
+
     //region CalendarDetailsViewHolder
     fun bind(event: CalendarEvent) {
         title.text = event.title
@@ -31,6 +39,8 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         startTime.text = simpleDateFormat.format(event.startTime)
         endTime.text = simpleDateFormat.format(event.endTime)
+
+        attendeeAdapter.data = event.attendees.toMutableList()
     }
     //endregion
 

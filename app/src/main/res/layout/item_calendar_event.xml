@@ -119,10 +119,12 @@
             android:id="@+id/accountsRecyclerView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/descriptionIconImageView"
             app:layout_constraintEnd_toEndOf="@+id/accountsTitleTextView"
-            app:layout_constraintStart_toStartOf="@+id/accountsIconImageView"
-            tools:itemCount="3" />
+            app:layout_constraintStart_toStartOf="@+id/accountsTitleTextView"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_event_attendee" />
 
         <ImageView
             android:id="@+id/descriptionIconImageView"
@@ -132,7 +134,7 @@
             android:src="@drawable/ic_text"
             android:tint="@color/colorSecondaryText"
             android:tintMode="src_in"
-            app:layout_constraintStart_toStartOf="@+id/accountsRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/accountsIconImageView"
             app:layout_constraintTop_toBottomOf="@+id/accountsRecyclerView"
             tools:ignore="ContentDescription" />
 
