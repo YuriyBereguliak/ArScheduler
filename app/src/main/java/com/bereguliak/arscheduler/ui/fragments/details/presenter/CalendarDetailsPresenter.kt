@@ -21,7 +21,7 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
         }
         launch(exceptionHandler) {
             view.showLoading()
-            val events = loadEventsByCalendarId(info.id)
+            val events = loadEventsByCalendarId(info)
             if (events.isEmpty()) {
                 view.showNoEventsResult()
             } else {
@@ -33,8 +33,8 @@ class CalendarDetailsPresenter @Inject constructor(private val view: CalendarDet
     //endregion
 
     //region Utility API
-    private suspend fun loadEventsByCalendarId(id: String) = withDispatcherIO {
-        calendarOrchestrator.loadEventsForCurrentDay(id)
+    private suspend fun loadEventsByCalendarId(info: CalendarLocation) = withDispatcherIO {
+        calendarOrchestrator.loadEventsForCurrentDay(info)
     }
     //endregion
 }
