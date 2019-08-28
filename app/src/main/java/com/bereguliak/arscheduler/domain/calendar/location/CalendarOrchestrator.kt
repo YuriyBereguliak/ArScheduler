@@ -1,14 +1,15 @@
 package com.bereguliak.arscheduler.domain.calendar.location
 
+import com.bereguliak.arscheduler.model.CalendarEvent
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.google.api.services.calendar.model.CalendarList
-import com.google.api.services.calendar.model.Events
 
 interface CalendarOrchestrator {
     fun initUserAccount()
 
     suspend fun loadLocations(): CalendarList?
 
-    suspend fun loadEventsForCurrentDay(calendarId: String): Events?
+    suspend fun loadEventsForCurrentDay(info: CalendarLocation): List<CalendarEvent>
 
     fun logout()
 }

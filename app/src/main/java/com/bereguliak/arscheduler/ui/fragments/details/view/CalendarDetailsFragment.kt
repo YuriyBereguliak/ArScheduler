@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.view.View
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.core.adapter.MarginItemDecoration
 import com.bereguliak.arscheduler.core.ui.BaseFragment
 import com.bereguliak.arscheduler.model.CalendarEvent
 import com.bereguliak.arscheduler.model.CalendarLocation
@@ -30,6 +31,11 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
         initBackButtonClickListener()
         initDataFromArgs()
     }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.unSubscribe()
+    }
     //endregion
 
     //region Utility API
@@ -44,6 +50,8 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
     }
 
     private fun initAdapterForRecyclerView() {
+        val margin = resources.getDimension(R.dimen.margin_all_default).toInt()
+        calendarDetailsEventRecyclerView.addItemDecoration(MarginItemDecoration(margin))
         calendarDetailsEventRecyclerView.adapter = adapter
     }
 

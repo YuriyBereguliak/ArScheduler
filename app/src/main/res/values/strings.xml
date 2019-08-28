@@ -15,4 +15,8 @@
     <!--#region Details screen -->
     <string name="text_details_empty">Empty calendar</string>
     <!--endregion-->
+
+    <!--#region Item Details Event  -->
+    <string name="text_item_calendar_event_guests">Guests</string>
+    <!--endregion-->
 </resources>
