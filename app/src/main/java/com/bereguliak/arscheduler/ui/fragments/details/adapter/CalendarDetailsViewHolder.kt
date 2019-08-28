@@ -23,11 +23,15 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val description = itemView.findViewById<TextView>(R.id.descriptionTextView)
     private val descriptionIcon = itemView.findViewById<ImageView>(R.id.descriptionIconImageView)
 
+    private val accountsIcon = itemView.findViewById<ImageView>(R.id.accountsIconImageView)
+    private val accountsTitle = itemView.findViewById<TextView>(R.id.accountsTitleTextView)
+    private val attendeesRecyclerView =  itemView.findViewById<RecyclerView>(R.id.accountsRecyclerView)
+
     private val attendeeAdapter by lazy { CalendarEventAttendeeAdapter() }
     private val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
     init {
-        itemView.findViewById<RecyclerView>(R.id.accountsRecyclerView).apply {
+        attendeesRecyclerView.apply {
             val margin = itemView.context.resources.getDimension(R.dimen.margin_all_small).toInt()
             addItemDecoration(MarginItemDecoration(margin))
 
@@ -40,12 +44,12 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         title.text = event.title
         handleEventDescription(event)
         handleEventOrganizer(event.organizer)
+        handleEventAttendees(event.attendees)
 
         startTime.text = simpleDateFormat.format(event.startTime)
         endTime.text = simpleDateFormat.format(event.endTime)
-
-        attendeeAdapter.data = event.attendees.toMutableList()
     }
+
     //endregion
 
     //region Utility API
@@ -65,6 +69,15 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         }
     }
 
+    private fun handleEventAttendees(attendees: List<EventAttendee>) {
+        if (attendees.isEmpty()) {
+            changeVisibilityStatusOfAttendees(View.GONE)
+        } else {
+            changeVisibilityStatusOfAttendees(View.VISIBLE)
+            if (attendeeAdapter.data.isEmpty()) attendeeAdapter.data = attendees.toMutableList()
+        }
+    }
+
     private fun changeVisibilityStatusOfOrganizerData(status: Int) {
         organizerName.visibility = status
         organizerIcon.visibility = status
@@ -73,6 +86,12 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private fun changeVisibilityStatusOfDescription(status: Int) {
         description.visibility = status
         descriptionIcon.visibility = status
+    }
+
+    private fun changeVisibilityStatusOfAttendees(status: Int) {
+        accountsIcon.visibility = status
+        accountsTitle.visibility = status
+        attendeesRecyclerView.visibility = status
     }
     //endregion
 }
