@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.core.adapter.MarginItemDecoration
 import com.bereguliak.arscheduler.model.CalendarEvent
 import com.bereguliak.arscheduler.model.EventAttendee
 import java.text.SimpleDateFormat
@@ -26,6 +27,9 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
     init {
         itemView.findViewById<RecyclerView>(R.id.accountsRecyclerView).apply {
+            val margin = itemView.context.resources.getDimension(R.dimen.margin_all_small).toInt()
+            addItemDecoration(MarginItemDecoration(margin))
+
             adapter = attendeeAdapter
         }
     }
