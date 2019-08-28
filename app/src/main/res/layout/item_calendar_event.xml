@@ -69,7 +69,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_all_medium"
             android:src="@drawable/ic_calendar_organizer"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:tint="@color/colorSecondaryText"
+            app:layout_constraintBottom_toTopOf="@id/organizerIconImageView"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/view"
             tools:ignore="ContentDescription" />
@@ -77,12 +78,48 @@
         <TextView
             android:id="@+id/organizerNameTextView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/margin_all_medium"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorSecondaryText"
             app:layout_constraintBottom_toBottomOf="@+id/organizerIconImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/organizerIconImageView"
             app:layout_constraintTop_toTopOf="@+id/organizerIconImageView"
             tools:text="User User" />
+
+        <ImageView
+            android:id="@+id/accountsIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_all_default"
+            android:src="@drawable/ic_accounts_multiple"
+            android:tint="@color/colorSecondaryText"
+            app:layout_constraintBottom_toTopOf="@id/accountsRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/organizerIconImageView"
+            app:layout_constraintTop_toBottomOf="@+id/organizerIconImageView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/accountsTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_all_medium"
+            android:gravity="center_vertical"
+            android:text="@string/text_item_calendar_event_guests"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintBottom_toBottomOf="@+id/accountsIconImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/accountsIconImageView"
+            app:layout_constraintTop_toTopOf="@+id/accountsIconImageView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/accountsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/accountsTitleTextView"
+            app:layout_constraintStart_toStartOf="@+id/accountsIconImageView"
+            tools:itemCount="3" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
