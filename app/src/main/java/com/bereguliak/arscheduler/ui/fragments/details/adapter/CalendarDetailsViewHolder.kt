@@ -36,19 +36,9 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
     //region Utility API
     private fun handleEventOrganizer(organizer: EventAttendee) {
-        organizerName.text = when {
-            !organizer.displayName.isNullOrEmpty() -> {
-                changeVisibilityStatusOfOrganizerData(View.VISIBLE)
-                organizer.displayName
-            }
-            organizer.email.isNotEmpty() -> {
-                changeVisibilityStatusOfOrganizerData(View.VISIBLE)
-                organizer.email
-            }
-            else -> {
-                changeVisibilityStatusOfOrganizerData(View.GONE)
-                ""
-            }
+        organizerName.text = organizer.getNameToDisplay().also {
+            if (it.isEmpty()) changeVisibilityStatusOfOrganizerData(View.GONE)
+            else changeVisibilityStatusOfOrganizerData(View.VISIBLE)
         }
     }
 

@@ -11,4 +11,10 @@ data class CalendarEvent(val id: String,
 data class EventAttendee(val email: String,
                          val displayName: String?,
                          val response: String?,
-                         val isOrganizer: Boolean = false)
+                         val isOrganizer: Boolean = false) {
+    fun getNameToDisplay() = when {
+        !displayName.isNullOrEmpty() -> displayName
+        email.isNotEmpty() -> email
+        else -> ""
+    }
+}
