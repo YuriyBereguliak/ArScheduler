@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.model.CalendarEvent
+import com.bereguliak.arscheduler.model.EventAttendee
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,6 +16,9 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val startTime = itemView.findViewById<TextView>(R.id.eventStartTime)
     private val endTime = itemView.findViewById<TextView>(R.id.eventEndTime)
 
+    private val organizerName = itemView.findViewById<TextView>(R.id.organizerNameTextView)
+    private val organizerIcon = itemView.findViewById<ImageView>(R.id.organizerIconImageView)
+
     private val description = itemView.findViewById<TextView>(R.id.descriptionTextView)
     private val descriptionIcon = itemView.findViewById<ImageView>(R.id.descriptionIconImageView)
 
@@ -22,6 +26,8 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     fun bind(event: CalendarEvent) {
         title.text = event.title
         handleEventDescription(event)
+        handleEventOrganizer(event.organizer)
+
         val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         startTime.text = simpleDateFormat.format(event.startTime)
         endTime.text = simpleDateFormat.format(event.endTime)
@@ -29,15 +35,40 @@ class CalendarDetailsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     //endregion
 
     //region Utility API
+    private fun handleEventOrganizer(organizer: EventAttendee) {
+        organizerName.text = when {
+            !organizer.displayName.isNullOrEmpty() -> {
+                changeVisibilityStatusOfOrganizerData(View.VISIBLE)
+                organizer.displayName
+            }
+            organizer.email.isNotEmpty() -> {
+                changeVisibilityStatusOfOrganizerData(View.VISIBLE)
+                organizer.email
+            }
+            else -> {
+                changeVisibilityStatusOfOrganizerData(View.GONE)
+                ""
+            }
+        }
+    }
+
     private fun handleEventDescription(event: CalendarEvent) {
         if (event.description.isNullOrEmpty()) {
-            descriptionIcon.visibility = View.GONE
-            description.visibility = View.GONE
+            changeVisibilityStatusOfDescription(View.GONE)
         } else {
-            description.visibility = View.VISIBLE
-            descriptionIcon.visibility = View.VISIBLE
+            changeVisibilityStatusOfDescription(View.VISIBLE)
             description.text = event.description
         }
+    }
+
+    private fun changeVisibilityStatusOfOrganizerData(status: Int) {
+        organizerName.visibility = status
+        organizerIcon.visibility = status
+    }
+
+    private fun changeVisibilityStatusOfDescription(status: Int) {
+        description.visibility = status
+        descriptionIcon.visibility = status
     }
     //endregion
 }

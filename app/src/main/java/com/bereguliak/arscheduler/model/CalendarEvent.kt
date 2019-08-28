@@ -5,9 +5,10 @@ data class CalendarEvent(val id: String,
                          val description: String?,
                          val startTime: Long,
                          val endTime: Long,
+                         val organizer: EventAttendee,
                          val attendees: List<EventAttendee>)
 
 data class EventAttendee(val email: String,
                          val displayName: String?,
                          val response: String?,
-                         val isOrganizer: Boolean)
+                         val isOrganizer: Boolean = false)

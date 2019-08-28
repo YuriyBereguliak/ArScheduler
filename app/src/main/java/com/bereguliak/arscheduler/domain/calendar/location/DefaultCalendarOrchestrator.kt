@@ -84,12 +84,14 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
                 event.description,
                 event.start.dateTime.value,
                 event.end.dateTime.value,
+                event.organizer.createOrganizer(),
                 event.attendees.map {
-                    EventAttendee(it.email,
-                            it.displayName,
-                            it.responseStatus,
-                            it.organizer ?: false)
+                    EventAttendee(it.email, it.displayName, it.responseStatus)
                 })
+    }
+
+    private fun Event.Organizer.createOrganizer(): EventAttendee {
+        return EventAttendee(this.email, this.displayName, null, true)
     }
     //endregion
 
@@ -101,7 +103,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
 
         private const val CALENDAR_FIELDS = "items(id, summary, backgroundColor)"
         private const val EVENTS_FIELDS =
-                "items(attachments,attendees,colorId,description,end,endTimeUnspecified,id,originalStartTime,source,start,status,summary)"
+                "items(attachments,attendees,colorId,description,end,endTimeUnspecified,id,originalStartTime,source,start,status,summary,organizer)"
     }
     //endregion
 }
