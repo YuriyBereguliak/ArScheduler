@@ -70,6 +70,7 @@
             android:layout_marginTop="@dimen/margin_all_medium"
             android:src="@drawable/ic_calendar_organizer"
             android:tint="@color/colorSecondaryText"
+            android:tintMode="src_in"
             app:layout_constraintBottom_toTopOf="@id/organizerIconImageView"
             app:layout_constraintStart_toStartOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/view"
@@ -95,6 +96,7 @@
             android:layout_marginTop="@dimen/margin_all_default"
             android:src="@drawable/ic_accounts_multiple"
             android:tint="@color/colorSecondaryText"
+            android:tintMode="src_in"
             app:layout_constraintBottom_toTopOf="@id/accountsRecyclerView"
             app:layout_constraintStart_toStartOf="@+id/organizerIconImageView"
             app:layout_constraintTop_toBottomOf="@+id/organizerIconImageView"
@@ -108,6 +110,7 @@
             android:gravity="center_vertical"
             android:text="@string/text_item_calendar_event_guests"
             android:textColor="@color/colorSecondaryText"
+
             app:layout_constraintBottom_toBottomOf="@+id/accountsIconImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/accountsIconImageView"
