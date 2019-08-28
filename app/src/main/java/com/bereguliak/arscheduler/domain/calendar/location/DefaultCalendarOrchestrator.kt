@@ -4,6 +4,7 @@ import android.content.Context
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.domain.user.UserOrchestrator
 import com.bereguliak.arscheduler.model.CalendarEvent
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.model.EventAttendee
 import com.bereguliak.arscheduler.model.enum.EventStatusType
 import com.bereguliak.arscheduler.utilities.extensions.setEndOfTheDay
@@ -46,10 +47,10 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
         return client?.calendarList()?.list()?.setFields(CALENDAR_FIELDS)?.execute()
     }
 
-    override suspend fun loadEventsForCurrentDay(calendarId: String): List<CalendarEvent> {
+    override suspend fun loadEventsForCurrentDay(info: CalendarLocation): List<CalendarEvent> {
         val start = java.util.Calendar.getInstance().apply { setStartOfTheDay() }
         val end = java.util.Calendar.getInstance().apply { setEndOfTheDay() }
-        val events = client?.events()?.list(calendarId)
+        val events = client?.events()?.list(info.id)
                 ?.setFields(EVENTS_FIELDS)
                 ?.setTimeZone(DEFAULT_TIMEZONE)
                 ?.setTimeMin(DateTime(start.time, TimeZone.getDefault()))
@@ -59,7 +60,7 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
                 ?.setSingleEvents(true)
                 ?.execute()
         return events?.let {
-            prepareResultEvents(it)
+            prepareResultEvents(it, info)
         } ?: emptyList()
     }
 
@@ -70,13 +71,17 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
     //endregion
 
     //region Utility API
-    private fun prepareResultEvents(events: Events) = events.items.filter {
-        it.status == EventStatusType.CONFIRMED.type
-    }.filter {
-        !it.summary.isNullOrEmpty()
-    }.sortedBy {
-        it.start.dateTime.value
-    }.mapEvents()
+    private fun prepareResultEvents(events: Events, info: CalendarLocation): List<CalendarEvent> {
+        return events.items.filter { it.status == EventStatusType.CONFIRMED.type }
+                .filter {
+                    !it.summary.isNullOrEmpty()
+                }
+                .sortedBy {
+                    it.start.dateTime.value
+                }
+                .mapEvents()
+                .removeCalendarFromAttendees(info)
+    }
 
     private fun List<Event>.mapEvents() = map { event ->
         CalendarEvent(event.id,
@@ -92,6 +97,15 @@ class DefaultCalendarOrchestrator @Inject constructor(private val context: Conte
 
     private fun Event.Organizer.createOrganizer(): EventAttendee {
         return EventAttendee(this.email, this.displayName, null, true)
+    }
+
+    private fun List<CalendarEvent>.removeCalendarFromAttendees(info: CalendarLocation): List<CalendarEvent> {
+        forEach { event ->
+            event.attendees.filter { it.displayName != info.summary }.also {
+                event.attendees = it
+            }
+        }
+        return this
     }
     //endregion
 

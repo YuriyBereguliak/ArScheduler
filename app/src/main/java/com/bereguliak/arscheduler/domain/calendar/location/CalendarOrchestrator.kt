@@ -1,6 +1,7 @@
 package com.bereguliak.arscheduler.domain.calendar.location
 
 import com.bereguliak.arscheduler.model.CalendarEvent
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.google.api.services.calendar.model.CalendarList
 
 interface CalendarOrchestrator {
@@ -8,7 +9,7 @@ interface CalendarOrchestrator {
 
     suspend fun loadLocations(): CalendarList?
 
-    suspend fun loadEventsForCurrentDay(calendarId: String): List<CalendarEvent>
+    suspend fun loadEventsForCurrentDay(info: CalendarLocation): List<CalendarEvent>
 
     fun logout()
 }

@@ -6,7 +6,7 @@ data class CalendarEvent(val id: String,
                          val startTime: Long,
                          val endTime: Long,
                          val organizer: EventAttendee,
-                         val attendees: List<EventAttendee>)
+                         var attendees: List<EventAttendee>)
 
 data class EventAttendee(val email: String,
                          val displayName: String?,
