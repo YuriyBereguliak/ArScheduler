@@ -38,11 +38,12 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
             navigator.showArSchedulerScreen()
         }
         fragmentConnectionGoToMyCalendarArButton.setOnClickListener {
-            navigator.showMyCalendarArScheduler()
+            presenter.findUserCalendar()
         }
         userLogout.setOnClickListener {
             adapter.data = mutableListOf()
             fragmentConnectionGoToArButton.isEnabled = false
+            fragmentConnectionGoToMyCalendarArButton.isEnabled = false
             userLogout.visibility = View.GONE
             userNameHint.visibility = View.GONE
             userConnectionStatus.setImageResource(R.drawable.ic_calendar_error)
@@ -111,6 +112,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     override fun userCalendarsLoaded() {
         fragmentConnectionGoToArButton.isEnabled = true
+        fragmentConnectionGoToMyCalendarArButton.isEnabled = true
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_ready)
     }
 
@@ -124,6 +126,10 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     override fun hideNoNetworkError() {
         connectionNoNetworkImageView.visibility = View.GONE
+    }
+
+    override fun showUserCalendarInfo(calendarLocation: CalendarLocation) {
+        navigator.showMyCalendarArScheduler(calendarLocation)
     }
     //endregion
 

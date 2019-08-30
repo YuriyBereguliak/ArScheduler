@@ -26,10 +26,14 @@ interface ConnectionContract {
         fun userCalendarsLoaded()
 
         fun showUserCalendarLocations(data: MutableList<CalendarLocation>)
+
+        fun showUserCalendarInfo(calendarLocation: CalendarLocation)
     }
 
     interface Presenter {
         fun loadUserInfo()
+
+        fun findUserCalendar()
 
         fun userAccountSelected(userName: String)
 
