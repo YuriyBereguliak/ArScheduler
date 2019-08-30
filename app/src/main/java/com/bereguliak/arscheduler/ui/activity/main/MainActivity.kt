@@ -6,7 +6,7 @@ import com.bereguliak.arscheduler.core.ui.BaseActivity
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.ar.view.ArScheduleFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.view.ConnectionFragment
-import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarDetailsFragment
+import com.bereguliak.arscheduler.ui.fragments.details.fragment.CalendarDetailsFragment
 import com.bereguliak.arscheduler.ui.fragments.loading.view.LoadingFragment
 import com.bereguliak.arscheduler.ui.fragments.mycalendar.view.MyCalendarArFragment
 import kotlinx.android.synthetic.main.activity_main.*
