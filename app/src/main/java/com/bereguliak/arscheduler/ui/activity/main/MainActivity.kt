@@ -39,8 +39,8 @@ class MainActivity : BaseActivity(), MainNavigator {
         replaceFragment(fragmentContainer.id, ArScheduleFragment.newInstance(), true)
     }
 
-    override fun showMyCalendarArScheduler() {
-        replaceFragment(fragmentContainer.id, MyCalendarArFragment.newInstance(), true)
+    override fun showMyCalendarArScheduler(calendar: CalendarLocation) {
+        replaceFragment(fragmentContainer.id, MyCalendarArFragment.newInstance(calendar), true)
     }
 
     override fun showSettingsScreen() {

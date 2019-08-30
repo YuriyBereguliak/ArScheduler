@@ -2,7 +2,9 @@ package com.bereguliak.arscheduler.ui.fragments.mycalendar.view
 
 import android.os.Bundle
 import android.view.*
-import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
+import com.bereguliak.arscheduler.model.CalendarLocation
+import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView
 import com.bereguliak.arscheduler.ui.fragments.mycalendar.MyCalendarContract
 import com.google.ar.core.Frame
 import com.google.ar.core.Plane
@@ -16,6 +18,13 @@ import javax.inject.Inject
 
 class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContract.View {
 
+    @Inject
+    internal lateinit var presenter: MyCalendarContract.Presenter
+
+    @Inject
+    internal lateinit var calendarOrchestrator: CalendarOrchestrator
+
+    private var eventsView: CalendarEventsView? = null
     private lateinit var viewRenderable: ViewRenderable
 
     private var gestureDetector = GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
@@ -29,19 +38,13 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
         }
     })
 
-    @Inject
-    internal lateinit var presenter: MyCalendarContract.Presenter
-
     //region ArFragment
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         AndroidSupportInjection.inject(this)
 
         val view = super.onCreateView(inflater, container, savedInstanceState)
-
-        ViewRenderable.builder()
-                .setView(context, R.layout.item_ar_calendar)
-                .build()
-                .thenAccept { viewRenderable = it }
+        initEventView()
+        initViewRenderable()
 
         arSceneView.scene.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
@@ -49,9 +52,33 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
 
         return view
     }
+
+    override fun onStop() {
+        super.onStop()
+        eventsView?.release()
+        presenter.unSubscribe()
+    }
     //endregion
 
     //region Utility API
+    private fun initEventView() {
+        eventsView = CalendarEventsView(context!!).apply {
+            addOrchestrator(calendarOrchestrator)
+            arguments?.let { args ->
+                args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)?.let { info ->
+                    calendarInfo = info
+                }
+            }
+        }
+    }
+
+    private fun initViewRenderable() {
+        ViewRenderable.builder()
+                .setView(context, eventsView)
+                .build()
+                .thenAccept { viewRenderable = it }
+    }
+
     private fun onSingleTap(tap: MotionEvent) {
         arSceneView.arFrame?.let {
             tryPlaceView(tap, it)
@@ -78,8 +105,17 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
 
     //region Utility structure
     companion object {
-        @JvmStatic
-        fun newInstance() = MyCalendarArFragment()
+
+        private const val ARG_CALENDAR_INFO =
+                "com.bereguliak.arscheduler.ui.fragments.mycalendar.view.CALENDAR_INFO"
+
+        fun newInstance(calendar: CalendarLocation): MyCalendarArFragment {
+            return MyCalendarArFragment().apply {
+                arguments = Bundle(1).apply {
+                    putParcelable(ARG_CALENDAR_INFO, calendar)
+                }
+            }
+        }
     }
     //endregion
 }

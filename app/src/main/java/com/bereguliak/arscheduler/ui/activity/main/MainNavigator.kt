@@ -9,6 +9,6 @@ interface MainNavigator {
     fun showConnectionScreen()
     fun showCalendarDetailsScreen(calendar: CalendarLocation)
     fun showArSchedulerScreen()
-    fun showMyCalendarArScheduler()
+    fun showMyCalendarArScheduler(calendar: CalendarLocation)
     fun showSettingsScreen()
 }
