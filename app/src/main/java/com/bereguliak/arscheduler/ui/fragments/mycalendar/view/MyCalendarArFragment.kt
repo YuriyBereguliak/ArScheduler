@@ -2,6 +2,8 @@ package com.bereguliak.arscheduler.ui.fragments.mycalendar.view
 
 import android.os.Bundle
 import android.view.*
+import android.widget.FrameLayout
+import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView
@@ -10,6 +12,8 @@ import com.google.ar.core.Frame
 import com.google.ar.core.Plane
 import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
+import com.google.ar.sceneform.math.Vector3
+import com.google.ar.sceneform.rendering.DpToMetersViewSizer
 import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
 import com.google.ar.sceneform.ux.TransformableNode
@@ -24,6 +28,7 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
     @Inject
     internal lateinit var calendarOrchestrator: CalendarOrchestrator
 
+    private var isScheduleAdded = false
     private var eventsView: CalendarEventsView? = null
     private lateinit var viewRenderable: ViewRenderable
 
@@ -43,7 +48,6 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
         AndroidSupportInjection.inject(this)
 
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        initEventView()
         initViewRenderable()
 
         arSceneView.scene.setOnTouchListener { _, event ->
@@ -61,7 +65,18 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
     //endregion
 
     //region Utility API
-    private fun initEventView() {
+    private fun initViewRenderable() {
+        ViewRenderable.builder()
+                .setView(context, R.layout.item_ar_container)
+                .setSizer(DpToMetersViewSizer(1500))
+                .build()
+                .thenAccept {
+                    viewRenderable = it
+                    viewRenderable.view.findViewById<FrameLayout>(R.id.fragmentContainer).prepareEventsView()
+                }
+    }
+
+    private fun FrameLayout.prepareEventsView() {
         eventsView = CalendarEventsView(context!!).apply {
             addOrchestrator(calendarOrchestrator)
             arguments?.let { args ->
@@ -70,32 +85,32 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
                 }
             }
         }
-    }
-
-    private fun initViewRenderable() {
-        ViewRenderable.builder()
-                .setView(context, eventsView)
-                .build()
-                .thenAccept { viewRenderable = it }
+        addView(eventsView)
     }
 
     private fun onSingleTap(tap: MotionEvent) {
         arSceneView.arFrame?.let {
-            tryPlaceView(tap, it)
+            if (!isScheduleAdded && tryPlaceView(tap, it)) {
+                isScheduleAdded = true
+            }
         }
     }
 
-    private fun tryPlaceView(tap: MotionEvent?, frame: Frame) {
+    private fun tryPlaceView(tap: MotionEvent?, frame: Frame): Boolean {
         if (tap != null && frame.camera.trackingState == TrackingState.TRACKING) {
             for (hit in frame.hitTest(tap)) {
-                hit.takeIf { it.trackable is Plane }?.let {
-                    AnchorNode(it.createAnchor()).apply {
+                hit.takeIf { it.trackable is Plane }?.let { hitResult ->
+                    AnchorNode(hitResult.createAnchor()).apply {
+                        localPosition = Vector3(0.25f, 0.25f, 0.25f)
                         setParent(arSceneView.scene)
                         addChild(createViewRenderableNode())
+                        eventsView?.loadData()
+                        return true
                     }
                 }
             }
         }
+        return false
     }
 
     private fun createViewRenderableNode() = TransformableNode(transformationSystem).apply {

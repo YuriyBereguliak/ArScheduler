@@ -101,9 +101,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
         userLogout.visibility = View.VISIBLE
         userNameHint.visibility = View.VISIBLE
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_sync)
-        adapter.data.isNullOrEmpty().takeIf { it }?.let {
-            presenter.startDownloadDataFromCalendar()
-        }
+        presenter.startDownloadDataFromCalendar()
     }
 
     override fun authorizationRequired(intent: Intent) {
@@ -135,7 +133,8 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     //region OnUserCalendarClickListener
     override fun onCalendarClickListener(calendar: CalendarLocation) {
-        navigator.showCalendarDetailsScreen(calendar)
+        navigator.showMyCalendarArScheduler(calendar)
+//        navigator.showCalendarDetailsScreen(calendar)
     }
     //endregion
 

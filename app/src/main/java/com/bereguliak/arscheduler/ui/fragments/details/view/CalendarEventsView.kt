@@ -21,10 +21,6 @@ class CalendarEventsView @JvmOverloads constructor(context: Context, attrs: Attr
     private val adapter by lazy { CalendarDetailsAdapter() }
 
     var calendarInfo: CalendarLocation? = null
-        set(value) {
-            field = value
-            notifyCalendarInfoChanged()
-        }
 
     init {
         inflate(context, R.layout.view_events, this)
@@ -34,6 +30,12 @@ class CalendarEventsView @JvmOverloads constructor(context: Context, attrs: Attr
     //region CalendarEventsView
     fun addOrchestrator(calendarOrchestrator: CalendarOrchestrator) {
         presenter = CalendarDetailsPresenter(this, calendarOrchestrator)
+    }
+
+    fun loadData() {
+        calendarInfo?.let { info ->
+            presenter?.loadEvents(info)
+        }
     }
 
     fun release() {
@@ -61,12 +63,6 @@ class CalendarEventsView @JvmOverloads constructor(context: Context, attrs: Attr
     //endregion
 
     //region Utility API
-    private fun notifyCalendarInfoChanged() {
-        calendarInfo?.let { info ->
-            presenter?.loadEvents(info)
-        }
-    }
-
     private fun initAdapterForRecyclerView() {
         val margin = resources.getDimension(R.dimen.margin_all_default).toInt()
         calendarDetailsEventRecyclerView.addItemDecoration(MarginItemDecoration(margin))

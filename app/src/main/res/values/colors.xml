@@ -15,4 +15,6 @@
 
     <!-- Connection screen -->
     <color name="colorConnectionUserInfoBackground">#26D3D3D3</color>
+
+    <color name="colorArBackground">#80FFFFFF</color>
 </resources>

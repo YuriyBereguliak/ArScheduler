@@ -49,6 +49,7 @@ class CalendarDetailsFragment : BaseFragment() {
                 calendarSummaryTextView.text = info.summary
                 calendarSummaryTextView.setBackgroundColor(info.color())
                 eventsView?.calendarInfo = info
+                eventsView?.loadData()
             }
         }
     }
