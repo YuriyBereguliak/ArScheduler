@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.*
 import com.bereguliak.arscheduler.R
 import com.bereguliak.arscheduler.ui.fragments.mycalendar.MyCalendarContract
-import com.google.ar.core.*
+import com.google.ar.core.Frame
+import com.google.ar.core.Plane
+import com.google.ar.core.TrackingState
 import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
@@ -46,12 +48,6 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
         }
 
         return view
-    }
-
-    override fun getSessionConfiguration(session: Session): Config {
-        val config = super.getSessionConfiguration(session)
-//        config.planeFindingMode = Config.PlaneFindingMode.VERTICAL
-        return config
     }
     //endregion
 
