@@ -1,25 +1,22 @@
-package com.bereguliak.arscheduler.ui.fragments.details.view
+package com.bereguliak.arscheduler.ui.fragments.details.fragment
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
-import android.view.View
 import com.bereguliak.arscheduler.R
-import com.bereguliak.arscheduler.core.adapter.MarginItemDecoration
 import com.bereguliak.arscheduler.core.ui.BaseFragment
-import com.bereguliak.arscheduler.model.CalendarEvent
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
-import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
-import com.bereguliak.arscheduler.ui.fragments.details.adapter.CalendarDetailsAdapter
+import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_calendar_details.*
 import javax.inject.Inject
 
-class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
+class CalendarDetailsFragment : BaseFragment() {
 
     @Inject
-    lateinit var presenter: CalendarDetailsContract.Presenter
+    internal lateinit var calendarOrchestrator: CalendarOrchestrator
 
-    private val adapter by lazy { CalendarDetailsAdapter() }
+    private var eventsView: CalendarEventsView? = null
 
     //region BaseFragment
     @LayoutRes
@@ -27,57 +24,40 @@ class CalendarDetailsFragment : BaseFragment(), CalendarDetailsContract.View {
 
     override fun initView() {
         AndroidSupportInjection.inject(this)
-        initAdapterForRecyclerView()
+        initEventView()
         initBackButtonClickListener()
         initDataFromArgs()
     }
 
     override fun onStop() {
         super.onStop()
-        presenter.unSubscribe()
+        eventsView?.release()
     }
     //endregion
 
     //region Utility API
+    private fun initEventView() {
+        eventsView = CalendarEventsView(context!!).apply {
+            addOrchestrator(calendarOrchestrator)
+        }
+        calendarEventsViewContainer.addView(eventsView)
+    }
+
     private fun initDataFromArgs() {
         arguments?.let { args ->
             args.getParcelable<CalendarLocation>(ARG_CALENDAR_INFO)?.let { info ->
                 calendarSummaryTextView.text = info.summary
                 calendarSummaryTextView.setBackgroundColor(info.color())
-                presenter.loadEvents(info)
+                eventsView?.calendarInfo = info
+                eventsView?.loadData()
             }
         }
-    }
-
-    private fun initAdapterForRecyclerView() {
-        val margin = resources.getDimension(R.dimen.margin_all_default).toInt()
-        calendarDetailsEventRecyclerView.addItemDecoration(MarginItemDecoration(margin))
-        calendarDetailsEventRecyclerView.adapter = adapter
     }
 
     private fun initBackButtonClickListener() {
         calendarSummaryBackButton.setOnClickListener {
             activity?.onBackPressed()
         }
-    }
-    //endregion
-
-    //region CalendarDetailsContract.View
-    override fun showEvents(events: List<CalendarEvent>) {
-        calendarDetailsEmptyViewContainer.visibility = View.GONE
-        adapter.data = events.toMutableList()
-    }
-
-    override fun showNoEventsResult() {
-        calendarDetailsEmptyViewContainer.visibility = View.VISIBLE
-    }
-
-    override fun showLoading() {
-        calendarDetailsLoader.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        calendarDetailsLoader.visibility = View.GONE
     }
     //endregion
 
