@@ -8,6 +8,7 @@ import com.bereguliak.arscheduler.ui.fragments.ar.view.ArScheduleFragment
 import com.bereguliak.arscheduler.ui.fragments.connection.view.ConnectionFragment
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarDetailsFragment
 import com.bereguliak.arscheduler.ui.fragments.loading.view.LoadingFragment
+import com.bereguliak.arscheduler.ui.fragments.mycalendar.view.MyCalendarArFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), MainNavigator {
@@ -36,6 +37,10 @@ class MainActivity : BaseActivity(), MainNavigator {
 
     override fun showArSchedulerScreen() {
         replaceFragment(fragmentContainer.id, ArScheduleFragment.newInstance(), true)
+    }
+
+    override fun showMyCalendarArScheduler() {
+        replaceFragment(fragmentContainer.id, MyCalendarArFragment.newInstance(), true)
     }
 
     override fun showSettingsScreen() {

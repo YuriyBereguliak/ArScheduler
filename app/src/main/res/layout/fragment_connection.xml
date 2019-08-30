@@ -139,6 +139,19 @@
         tools:visibility="visible" />
 
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fragmentConnectionGoToMyCalendarArButton"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/margin_all_default"
+        android:src="@drawable/ic_account"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentConnectionGoToArButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:useCompatPadding="true" />
+
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/fragmentConnectionGoToArButton"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"

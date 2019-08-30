@@ -37,6 +37,9 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
         }
+        fragmentConnectionGoToMyCalendarArButton.setOnClickListener {
+            navigator.showMyCalendarArScheduler()
+        }
         userLogout.setOnClickListener {
             adapter.data = mutableListOf()
             fragmentConnectionGoToArButton.isEnabled = false
