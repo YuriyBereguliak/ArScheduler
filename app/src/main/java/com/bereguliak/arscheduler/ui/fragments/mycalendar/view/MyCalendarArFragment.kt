@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.core.node.LocalRotationTransformableNode
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView
@@ -16,7 +17,6 @@ import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.DpToMetersViewSizer
 import com.google.ar.sceneform.rendering.ViewRenderable
 import com.google.ar.sceneform.ux.ArFragment
-import com.google.ar.sceneform.ux.TransformableNode
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -113,7 +113,7 @@ class MyCalendarArFragment @Inject constructor() : ArFragment(), MyCalendarContr
         return false
     }
 
-    private fun createViewRenderableNode() = TransformableNode(transformationSystem).apply {
+    private fun createViewRenderableNode() = LocalRotationTransformableNode(transformationSystem).apply {
         renderable = viewRenderable
     }
     //endregion
