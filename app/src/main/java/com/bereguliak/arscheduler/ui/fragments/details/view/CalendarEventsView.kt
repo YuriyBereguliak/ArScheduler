@@ -38,6 +38,10 @@ class CalendarEventsView @JvmOverloads constructor(context: Context, attrs: Attr
         }
     }
 
+    fun loadCalendarEventsByName(name: String) {
+        presenter?.loadEventsByCalendarName(name)
+    }
+
     fun release() {
         presenter?.unSubscribe()
     }
