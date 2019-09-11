@@ -37,9 +37,13 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
         fragmentConnectionGoToArButton.setOnClickListener {
             navigator.showArSchedulerScreen()
         }
+        fragmentConnectionGoToMyCalendarArButton.setOnClickListener {
+            presenter.findUserCalendar()
+        }
         userLogout.setOnClickListener {
             adapter.data = mutableListOf()
             fragmentConnectionGoToArButton.isEnabled = false
+            fragmentConnectionGoToMyCalendarArButton.isEnabled = false
             userLogout.visibility = View.GONE
             userNameHint.visibility = View.GONE
             userConnectionStatus.setImageResource(R.drawable.ic_calendar_error)
@@ -97,9 +101,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
         userLogout.visibility = View.VISIBLE
         userNameHint.visibility = View.VISIBLE
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_sync)
-        adapter.data.isNullOrEmpty().takeIf { it }?.let {
-            presenter.startDownloadDataFromCalendar()
-        }
+        presenter.startDownloadDataFromCalendar()
     }
 
     override fun authorizationRequired(intent: Intent) {
@@ -108,6 +110,7 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     override fun userCalendarsLoaded() {
         fragmentConnectionGoToArButton.isEnabled = true
+        fragmentConnectionGoToMyCalendarArButton.isEnabled = true
         userConnectionStatus.setImageResource(R.drawable.ic_calendar_ready)
     }
 
@@ -122,11 +125,16 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
     override fun hideNoNetworkError() {
         connectionNoNetworkImageView.visibility = View.GONE
     }
+
+    override fun showUserCalendarInfo(calendarLocation: CalendarLocation) {
+        navigator.showMyCalendarArScheduler(calendarLocation)
+    }
     //endregion
 
     //region OnUserCalendarClickListener
     override fun onCalendarClickListener(calendar: CalendarLocation) {
-        navigator.showCalendarDetailsScreen(calendar)
+        navigator.showMyCalendarArScheduler(calendar)
+//        navigator.showCalendarDetailsScreen(calendar)
     }
     //endregion
 

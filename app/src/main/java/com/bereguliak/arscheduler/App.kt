@@ -20,7 +20,7 @@ class App : Application(), HasActivityInjector, HasSupportFragmentInjector {
     @Inject
     internal lateinit var dispatchingFragmentAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    private lateinit var appComponent: AppComponent
+    lateinit var appComponent: AppComponent
 
     //region Application
     override fun onCreate() {

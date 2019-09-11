@@ -17,6 +17,8 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
                                               private val networkUtils: NetworkUtils)
     : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
+    private var locations = mutableListOf<CalendarLocation>()
+
     //region ConnectionContract.Presenter
     override fun prepareChooseAccount() {
         launch {
@@ -49,6 +51,18 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
         }
     }
 
+    override fun findUserCalendar() {
+        launch {
+            val userName = loadUserName()
+            val result = withDispatcherIO {
+                locations.firstOrNull { it.summary == userName }
+            }
+            result?.let {
+                view.showUserCalendarInfo(it)
+            }
+        }
+    }
+
     override fun startDownloadDataFromCalendar() {
         launch {
             networkUtils.isConnectionAvailable().takeUnless { it }?.let {
@@ -64,7 +78,7 @@ class ConnectionPresenter @Inject constructor(private val view: ConnectionContra
                 val result = loadLocations()
                 view.userCalendarsLoaded()
 
-                val locations = mappingLocations(result)
+                locations = mappingLocations(result)
                 view.showUserCalendarLocations(locations)
 
             } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
