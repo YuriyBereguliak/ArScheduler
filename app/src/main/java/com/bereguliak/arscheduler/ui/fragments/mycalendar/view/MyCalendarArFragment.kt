@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import com.bereguliak.arscheduler.R
-import com.bereguliak.arscheduler.core.node.LocalRotationTransformableNode
+import com.bereguliak.arscheduler.core.LocalRotationTransformableNode
 import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView

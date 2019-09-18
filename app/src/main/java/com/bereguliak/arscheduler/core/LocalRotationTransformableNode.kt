@@ -1,4 +1,4 @@
-package com.bereguliak.arscheduler.core.node
+package com.bereguliak.arscheduler.core
 
 import com.google.ar.sceneform.FrameTime
 import com.google.ar.sceneform.ux.TransformableNode

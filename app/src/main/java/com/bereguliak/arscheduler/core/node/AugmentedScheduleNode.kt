@@ -10,11 +10,9 @@ import com.google.ar.sceneform.AnchorNode
 import com.google.ar.sceneform.math.Vector3
 import com.google.ar.sceneform.rendering.DpToMetersViewSizer
 import com.google.ar.sceneform.rendering.ViewRenderable
-import com.google.ar.sceneform.ux.TransformationSystem
 import java.util.concurrent.CompletableFuture
 
-class AugmentedScheduleNode(context: Context,
-                            private val transformationSystem: TransformationSystem) : AnchorNode() {
+class AugmentedScheduleNode(context: Context) : AnchorNode() {
 
     private val viewCompletableFuture: CompletableFuture<ViewRenderable> = ViewRenderable.builder()
             .setView(context, R.layout.item_ar_container)
@@ -45,7 +43,7 @@ class AugmentedScheduleNode(context: Context,
         // Lower left corner.
 //        localPosition.set(-0.5f * image.extentX, 0.0f, 0.5f * image.extentZ)
 
-        LocalRotationTransformableNode(transformationSystem).apply {
+        LocalRotationNode().apply {
             renderable = viewRenderable
 //            setLocalPosition(localPosition)
             eventsView?.loadCalendarEventsByName(image.name)

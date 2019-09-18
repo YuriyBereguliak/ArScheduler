@@ -63,7 +63,7 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
     //region ArScheduleContract.View
     override fun createNode(image: AugmentedImage) {
         context?.let {
-            AugmentedScheduleNode(it, transformationSystem).apply {
+            AugmentedScheduleNode(it).apply {
                 setSource(image, calendarOrchestrator)
             }.also { node ->
                 presenter.addNode(image, node)
