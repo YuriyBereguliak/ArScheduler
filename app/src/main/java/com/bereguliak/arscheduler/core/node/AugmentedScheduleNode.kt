@@ -38,14 +38,13 @@ class AugmentedScheduleNode(context: Context) : AnchorNode() {
         // Set the anchor based on the center of the image.
         anchor = image.createAnchor(image.centerPose)
 
-        val localPosition = Vector3()
-
-        // Lower left corner.
-//        localPosition.set(-0.5f * image.extentX, 0.0f, 0.5f * image.extentZ)
+        val localPosition = Vector3().apply {
+            set(-1f * image.extentX, 0.0f, image.extentZ)
+        }
 
         LocalRotationNode().apply {
             renderable = viewRenderable
-//            setLocalPosition(localPosition)
+            setLocalPosition(localPosition)
             eventsView?.loadCalendarEventsByName(image.name)
         }.also { node ->
             addChild(node)
