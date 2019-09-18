@@ -5,8 +5,8 @@ import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.details.CalendarDetailsContract
 import com.bereguliak.arscheduler.utilities.L
+import com.google.api.services.calendar.model.CalendarListEntry
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CalendarDetailsPresenter(private val view: CalendarDetailsContract.View,
@@ -36,10 +36,14 @@ class CalendarDetailsPresenter(private val view: CalendarDetailsContract.View,
         launch(calendarExceptionHandler) {
             view.showLoading()
 
-            delay(2000)
-            view.showNoEventsResult()
+            val calendar = findCalendarEntry(name)
+            if (calendar == null) {
+                view.showNoEventsResult()
+                return@launch
+            }
 
-            view.hideLoading()
+            val info = mapCalendarEntry(calendar)
+            loadEvents(info)
         }
     }
     //endregion
@@ -47,6 +51,20 @@ class CalendarDetailsPresenter(private val view: CalendarDetailsContract.View,
     //region Utility API
     private suspend fun loadEventsByCalendarId(info: CalendarLocation) = withDispatcherIO {
         calendarOrchestrator.loadEventsForCurrentDay(info)
+    }
+
+    private suspend fun findCalendarEntry(name: String): CalendarListEntry? {
+        return withDispatcherIO {
+            var calendarEntry: CalendarListEntry? = null
+            calendarOrchestrator.loadLocations()?.let { list ->
+                calendarEntry = list.items.firstOrNull { it.summary.contains(name) }
+            }
+            calendarEntry
+        }
+    }
+
+    private suspend fun mapCalendarEntry(calendarListEntry: CalendarListEntry) = withDispatcherIO {
+        CalendarLocation(calendarListEntry.id, calendarListEntry.summary, calendarListEntry.backgroundColor)
     }
     //endregion
 }
