@@ -1,13 +1,14 @@
 package com.bereguliak.arscheduler.ui.fragments.ar.presenter
 
-import com.bereguliak.arscheduler.ui.ar.AugmentedImageNode
+import com.bereguliak.arscheduler.core.node.AugmentedScheduleNode
 import com.bereguliak.arscheduler.ui.fragments.ar.ArScheduleContract
 import com.google.ar.core.AugmentedImage
 import java.util.*
+import javax.inject.Inject
 
-class ArSchedulePresenter(private val view: ArScheduleContract.View) : ArScheduleContract.Presenter {
+class ArSchedulePresenter @Inject constructor(private val view: ArScheduleContract.View) : ArScheduleContract.Presenter {
 
-    private val augmentedImageMap = HashMap<AugmentedImage, AugmentedImageNode>()
+    private val augmentedImageMap = HashMap<AugmentedImage, AugmentedScheduleNode>()
 
     //region ArScheduleContract.Presenter
     override fun trackImage(image: AugmentedImage) {
@@ -16,7 +17,7 @@ class ArSchedulePresenter(private val view: ArScheduleContract.View) : ArSchedul
         }
     }
 
-    override fun addNode(image: AugmentedImage, node: AugmentedImageNode) {
+    override fun addNode(image: AugmentedImage, node: AugmentedScheduleNode) {
         augmentedImageMap[image] = node
     }
 

@@ -77,11 +77,11 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     //region ConnectionContract.View
     override fun showLoading() {
-        userCalendarLoader.visibility = View.VISIBLE
+        userCalendarLoader?.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        userCalendarLoader.visibility = View.GONE
+        userCalendarLoader?.visibility = View.GONE
     }
 
     override fun chooseAccount() {

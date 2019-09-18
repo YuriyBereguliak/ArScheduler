@@ -17,6 +17,8 @@ interface CalendarDetailsContract {
     interface Presenter {
         fun loadEvents(info: CalendarLocation)
 
+        fun loadEventsByCalendarName(name: String)
+
         fun unSubscribe()
     }
 }
