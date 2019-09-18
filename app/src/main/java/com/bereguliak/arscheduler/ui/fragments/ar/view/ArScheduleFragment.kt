@@ -49,7 +49,13 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
             context?.assets?.let { manager ->
                 val augmentedImageDatabase = AugmentedImageDatabase(session)
 
-                augmentedImageDatabase.add("Genius Room", "icons/qrcode.png", manager)
+                augmentedImageDatabase.add("Genius Room", "icons/genius.png", manager)
+                augmentedImageDatabase.add("Urban Room", "icons/urban.png", manager)
+                augmentedImageDatabase.add("AcademyX Room", "icons/academyX.png", manager)
+                augmentedImageDatabase.add("Algorithm Room", "icons/algorithm.png", manager)
+                augmentedImageDatabase.add("Jazz Room", "icons/jazz.png", manager)
+                augmentedImageDatabase.add("Travel Room", "icons/travel.png", manager)
+                augmentedImageDatabase.add("Green Room", "icons/green.png", manager)
 
                 config.augmentedImageDatabase = augmentedImageDatabase
             }
