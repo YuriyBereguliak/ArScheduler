@@ -3,6 +3,7 @@ package com.bereguliak.arscheduler.core.node
 import android.content.Context
 import android.widget.FrameLayout
 import com.bereguliak.arscheduler.R
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.ui.fragments.details.view.CalendarEventsView
 import com.google.ar.core.AugmentedImage
 import com.google.ar.sceneform.AnchorNode
@@ -25,12 +26,13 @@ class AugmentedScheduleNode(context: Context,
     private var eventsView: CalendarEventsView? = null
 
     //region Description
-    fun setSource(image: AugmentedImage) {
+    fun setSource(image: AugmentedImage, calendarOrchestrator: CalendarOrchestrator) {
         if (viewRenderable == null) {
             viewCompletableFuture.thenAccept { viewRenderable ->
                 this.viewRenderable = viewRenderable
-                viewRenderable?.view?.findViewById<FrameLayout>(R.id.fragmentContainer)?.prepareEventsView()
-                setSource(image)
+                viewRenderable?.view?.findViewById<FrameLayout>(R.id.fragmentContainer)
+                        ?.prepareEventsView(calendarOrchestrator)
+                setSource(image, calendarOrchestrator)
             }
             return
         }
@@ -54,9 +56,9 @@ class AugmentedScheduleNode(context: Context,
     //endregion
 
     //region Utility API
-    private fun FrameLayout.prepareEventsView() {
+    private fun FrameLayout.prepareEventsView(calendarOrchestrator: CalendarOrchestrator) {
         eventsView = CalendarEventsView(context).apply {
-
+            addOrchestrator(calendarOrchestrator)
         }
         addView(eventsView)
     }

@@ -9,24 +9,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bereguliak.arscheduler.core.node.AugmentedScheduleNode
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
 import com.bereguliak.arscheduler.ui.fragments.ar.ArScheduleContract
-import com.bereguliak.arscheduler.ui.fragments.ar.presenter.ArSchedulePresenter
 import com.bereguliak.arscheduler.utilities.L
 import com.google.ar.core.*
 import com.google.ar.sceneform.ux.ArFragment
+import dagger.android.support.AndroidSupportInjection
 import java.io.IOException
+import javax.inject.Inject
 
 class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
 
+    @Inject
+    internal lateinit var calendarOrchestrator: CalendarOrchestrator
 
-    private val presenter: ArScheduleContract.Presenter by lazy { ArSchedulePresenter(this) }
+    @Inject
+    internal lateinit var presenter: ArScheduleContract.Presenter
 
     //region BaseArFragment
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        AndroidSupportInjection.inject(this)
+
         val view = super.onCreateView(inflater, container, savedInstanceState)
 
         planeDiscoveryController.hide()
@@ -59,7 +64,7 @@ class ArScheduleFragment : ArFragment(), ArScheduleContract.View {
     override fun createNode(image: AugmentedImage) {
         context?.let {
             AugmentedScheduleNode(it, transformationSystem).apply {
-                setSource(image)
+                setSource(image, calendarOrchestrator)
             }.also { node ->
                 presenter.addNode(image, node)
                 arSceneView.scene.addChild(node)
