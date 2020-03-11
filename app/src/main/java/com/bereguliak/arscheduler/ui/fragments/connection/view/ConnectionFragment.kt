@@ -133,8 +133,8 @@ class ConnectionFragment : BaseFragment(), ConnectionContract.View, OnUserCalend
 
     //region OnUserCalendarClickListener
     override fun onCalendarClickListener(calendar: CalendarLocation) {
-        navigator.showMyCalendarArScheduler(calendar)
-//        navigator.showCalendarDetailsScreen(calendar)
+//        navigator.showMyCalendarArScheduler(calendar)
+        navigator.showCalendarDetailsScreen(calendar)
     }
     //endregion
 

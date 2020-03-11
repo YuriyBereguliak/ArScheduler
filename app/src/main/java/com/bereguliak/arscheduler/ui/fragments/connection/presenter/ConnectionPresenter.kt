@@ -11,11 +11,12 @@ import com.google.api.services.calendar.model.CalendarList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
-                                              private val calendarOrchestrator: CalendarOrchestrator,
-                                              private val userOrchestrator: UserOrchestrator,
-                                              private val networkUtils: NetworkUtils)
-    : BaseCoroutinePresenter(), ConnectionContract.Presenter {
+class ConnectionPresenter @Inject constructor(
+    private val view: ConnectionContract.View,
+    private val calendarOrchestrator: CalendarOrchestrator,
+    private val userOrchestrator: UserOrchestrator,
+    private val networkUtils: NetworkUtils
+) : BaseCoroutinePresenter(), ConnectionContract.Presenter {
 
     private var locations = mutableListOf<CalendarLocation>()
 

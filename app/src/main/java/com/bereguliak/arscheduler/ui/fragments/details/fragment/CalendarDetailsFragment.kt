@@ -65,7 +65,7 @@ class CalendarDetailsFragment : BaseFragment() {
     companion object {
 
         private const val ARG_CALENDAR_INFO =
-                "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_INFO"
+            "com.bereguliak.arscheduler.ui.fragments.details.view.CALENDAR_INFO"
 
         fun newInstance(calendar: CalendarLocation): CalendarDetailsFragment {
             return CalendarDetailsFragment().apply {
