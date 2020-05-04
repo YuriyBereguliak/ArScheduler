@@ -1,71 +1,123 @@
 package com.bereguliak.arscheduler.ui.fragments.connection.presenter
 
-import android.util.Log
 import com.bereguliak.arscheduler.core.presenter.BaseCoroutinePresenter
-import com.bereguliak.arscheduler.data.local.user.UserLocalRepository
-import com.bereguliak.arscheduler.model.CalendarInfo
+import com.bereguliak.arscheduler.domain.calendar.location.CalendarOrchestrator
+import com.bereguliak.arscheduler.domain.user.UserOrchestrator
+import com.bereguliak.arscheduler.model.CalendarLocation
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.bereguliak.arscheduler.utilities.network.NetworkUtils
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
-import com.google.api.services.calendar.Calendar
+import com.google.api.services.calendar.model.CalendarList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class ConnectionPresenter @Inject constructor(private val view: ConnectionContract.View,
-                                              private val credential: GoogleAccountCredential,
-                                              private val client: Calendar,
-                                              private val userLocalRepository: UserLocalRepository)
-    : BaseCoroutinePresenter(), ConnectionContract.Presenter {
+class ConnectionPresenter @Inject constructor(
+    private val view: ConnectionContract.View,
+    private val calendarOrchestrator: CalendarOrchestrator,
+    private val userOrchestrator: UserOrchestrator,
+    private val networkUtils: NetworkUtils
+) : BaseCoroutinePresenter(), ConnectionContract.Presenter {
+
+    private var locations = mutableListOf<CalendarLocation>()
 
     //region ConnectionContract.Presenter
     override fun prepareChooseAccount() {
-        view.chooseAccount(credential)
-    }
-
-    override fun loadUserInfo() {
-        launch(exceptionHandler) {
-            val userName = loadUserName()
-            credential.selectedAccountName = userName
-
-            if (userName.isNullOrEmpty()) {
-                view.chooseAccount(credential)
-            } else {
-                view.accountConnected()
+        launch {
+            when (withDispatcherIO { userOrchestrator.isUserSignedIn() }) {
+                true -> view.chooseAccountNotAllowed()
+                false -> view.chooseAccount()
             }
         }
     }
 
-    override fun saveUserName(userName: String) {
+    override fun loadUserInfo() {
+        launch(exceptionHandler) {
+            if (userOrchestrator.isUserSignedIn()) {
+                loadUserName()?.let { userName ->
+                    calendarOrchestrator.initUserAccount()
+                    view.setUserName(userName)
+                    view.accountConnected()
+                }
+            } else {
+                prepareChooseAccount()
+            }
+        }
+    }
+
+    override fun userAccountSelected(userName: String) {
         launch {
-            credential.selectedAccountName = userName
             saveUserInfo(userName)
+            calendarOrchestrator.initUserAccount()
+            startDownloadDataFromCalendar()
+        }
+    }
+
+    override fun findUserCalendar() {
+        launch {
+            val userName = loadUserName()
+            val result = withDispatcherIO {
+                locations.firstOrNull { it.summary == userName }
+            }
+            result?.let {
+                view.showUserCalendarInfo(it)
+            }
         }
     }
 
     override fun startDownloadDataFromCalendar() {
         launch {
-            try {
-                val result = loadInfoFromCalendar()
-                Log.d("ConnectionPresenter", result.toString())
-            } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
-                Log.e("ConnectionPresenter", recoverableAuthIOException.toString())
-                view.authorizationRequired(recoverableAuthIOException.intent)
+            networkUtils.isConnectionAvailable().takeUnless { it }?.let {
+                view.showNoNetworkError()
+                return@launch
             }
+
+            view.hideNoNetworkError()
+
+            try {
+                view.showLoading()
+
+                val result = loadLocations()
+                view.userCalendarsLoaded()
+
+                locations = mappingLocations(result)
+                view.showUserCalendarLocations(locations)
+
+            } catch (recoverableAuthIOException: UserRecoverableAuthIOException) {
+                view.authorizationRequired(recoverableAuthIOException.intent)
+            } finally {
+                view.hideLoading()
+            }
+        }
+    }
+
+    override fun logout() {
+        launch {
+            withDispatcherIO {
+                userOrchestrator.logout()
+            }
+            calendarOrchestrator.logout()
+            view.setUserName("")
         }
     }
     //endregion
 
     //region Utility API
     private suspend fun loadUserName() = withDispatcherIO {
-        userLocalRepository.loadUserName()
+        userOrchestrator.loadUserName()
     }
 
     private suspend fun saveUserInfo(userName: String) = withDispatcherIO {
-        userLocalRepository.saveUserName(userName)
+        userOrchestrator.saveUserName(userName)
     }
 
-    private suspend fun loadInfoFromCalendar() = withDispatcherIO {
-        client.calendarList().list().setFields(CalendarInfo.FEED_FIELDS).execute()
+    private suspend fun loadLocations() = withDispatcherIO {
+        calendarOrchestrator.loadLocations()
+    }
+
+    private suspend fun mappingLocations(result: CalendarList?) = withDispatcherIO {
+        result?.items?.map { entry ->
+            CalendarLocation(entry.id, entry.summary, entry.backgroundColor)
+        }?.toMutableList() ?: mutableListOf()
     }
     //endregion
 }

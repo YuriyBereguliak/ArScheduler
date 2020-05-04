@@ -1,10 +1,7 @@
 package com.bereguliak.arscheduler.ui.fragments.ar
 
-import android.content.Context
-import com.bereguliak.arscheduler.ui.ar.AugmentedImageNode
+import com.bereguliak.arscheduler.core.node.AugmentedScheduleNode
 import com.google.ar.core.AugmentedImage
-import com.google.ar.core.Config
-import com.google.ar.core.Session
 
 interface ArScheduleContract {
     interface View {
@@ -12,7 +9,7 @@ interface ArScheduleContract {
     }
 
     interface Presenter {
-        fun addNode(image: AugmentedImage, node: AugmentedImageNode)
+        fun addNode(image: AugmentedImage, node: AugmentedScheduleNode)
 
         fun trackImage(image: AugmentedImage)
 

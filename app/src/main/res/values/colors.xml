@@ -3,4 +3,18 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#E7EE1F</color>
+
+    <!--Standard text colors according to material design guidelines -->
+    <color name="colorPrimaryText">#DE000000</color> <!-- 87% opacity -->
+    <color name="colorSecondaryText">#8A000000</color> <!-- 54% opacity -->
+    <color name="colorHintText">#61000000</color> <!-- 38% opacity -->
+    <color name="colorPrimaryTextLight">#FFFFFF</color> <!-- 100% opacity -->
+    <color name="colorSecondaryTextLight">#B3FFFFFF</color> <!-- 70% opacity -->
+    <color name="colorHintTextLight">#80FFFFFF</color> <!-- 50% opacity -->
+    <color name="colorDivider">#1F000000</color> <!-- 12% opacity -->
+
+    <!-- Connection screen -->
+    <color name="colorConnectionUserInfoBackground">#26D3D3D3</color>
+
+    <color name="colorArBackground">#80FFFFFF</color>
 </resources>

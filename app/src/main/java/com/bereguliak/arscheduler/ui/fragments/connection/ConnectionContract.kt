@@ -1,24 +1,48 @@
 package com.bereguliak.arscheduler.ui.fragments.connection
 
 import android.content.Intent
-import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential
+import com.bereguliak.arscheduler.model.CalendarLocation
 
 interface ConnectionContract {
     interface View {
-        fun chooseAccount(credentials: GoogleAccountCredential)
+        fun showLoading()
+
+        fun hideLoading()
+
+        fun showNoNetworkError()
+
+        fun hideNoNetworkError()
+
+        fun chooseAccount()
+
+        fun chooseAccountNotAllowed()
+
+        fun setUserName(user: String)
 
         fun accountConnected()
 
         fun authorizationRequired(intent: Intent)
+
+        fun userCalendarsLoaded()
+
+        fun showUserCalendarLocations(data: MutableList<CalendarLocation>)
+
+        fun showUserCalendarInfo(calendarLocation: CalendarLocation)
     }
 
     interface Presenter {
         fun loadUserInfo()
 
-        fun saveUserName(userName: String)
+        fun findUserCalendar()
+
+        fun userAccountSelected(userName: String)
 
         fun startDownloadDataFromCalendar()
 
         fun prepareChooseAccount()
+
+        fun logout()
+
+        fun unSubscribe()
     }
 }

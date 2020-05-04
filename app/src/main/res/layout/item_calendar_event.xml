@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_all_medium">
+
+        <TextView
+            android:id="@+id/eventStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/textsize_all_body"
+            app:layout_constraintBottom_toTopOf="@id/eventEndTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage"
+            tools:text="10:00" />
+
+        <TextView
+            android:id="@+id/eventEndTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/textsize_all_body"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/eventStartTime"
+            tools:ignore="SpUsage"
+            tools:text="10:30" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="@dimen/height_divider"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_all_medium"
+            android:layout_marginEnd="@dimen/margin_all_medium"
+            android:background="@color/colorDivider"
+            app:layout_constraintBottom_toBottomOf="@id/eventEndTime"
+            app:layout_constraintEnd_toStartOf="@id/eventTitle"
+            app:layout_constraintStart_toEndOf="@id/eventEndTime"
+            app:layout_constraintTop_toTopOf="@id/eventStartTime" />
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/textsize_all_body"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpUsage"
+            tools:text="Title of event" />
+
+        <ImageView
+            android:id="@+id/organizerIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_all_medium"
+            android:src="@drawable/ic_calendar_organizer"
+            android:tint="@color/colorSecondaryText"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toTopOf="@id/organizerIconImageView"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/organizerNameTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_all_medium"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintBottom_toBottomOf="@+id/organizerIconImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/organizerIconImageView"
+            app:layout_constraintTop_toTopOf="@+id/organizerIconImageView"
+            tools:text="User User" />
+
+        <ImageView
+            android:id="@+id/accountsIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_all_default"
+            android:src="@drawable/ic_accounts_multiple"
+            android:tint="@color/colorSecondaryText"
+            android:tintMode="src_in"
+            app:layout_constraintBottom_toTopOf="@id/accountsRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/organizerIconImageView"
+            app:layout_constraintTop_toBottomOf="@+id/organizerIconImageView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/accountsTitleTextView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_all_medium"
+            android:gravity="center_vertical"
+            android:text="@string/text_item_calendar_event_guests"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintBottom_toBottomOf="@+id/accountsIconImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/accountsIconImageView"
+            app:layout_constraintTop_toTopOf="@+id/accountsIconImageView" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/accountsRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/descriptionIconImageView"
+            app:layout_constraintEnd_toEndOf="@+id/accountsTitleTextView"
+            app:layout_constraintStart_toStartOf="@+id/accountsTitleTextView"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_event_attendee" />
+
+        <ImageView
+            android:id="@+id/descriptionIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_all_default"
+            android:src="@drawable/ic_text"
+            android:tint="@color/colorSecondaryText"
+            android:tintMode="src_in"
+            app:layout_constraintStart_toStartOf="@+id/accountsIconImageView"
+            app:layout_constraintTop_toBottomOf="@+id/accountsRecyclerView"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_all_medium"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorSecondaryText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/descriptionIconImageView"
+            app:layout_constraintTop_toTopOf="@+id/descriptionIconImageView"
+            tools:text="Comment" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

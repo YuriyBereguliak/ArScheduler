@@ -1,5 +1,6 @@
 package com.bereguliak.arscheduler.di.module.connection
 
+import com.bereguliak.arscheduler.di.scope.FragmentScope
 import com.bereguliak.arscheduler.ui.fragments.connection.ConnectionContract
 import com.bereguliak.arscheduler.ui.fragments.connection.presenter.ConnectionPresenter
 import com.bereguliak.arscheduler.ui.fragments.connection.view.ConnectionFragment
@@ -9,10 +10,10 @@ import dagger.Module
 @Module
 interface ConnectionContractModule {
     @Binds
-    @ConnectionScope
+    @FragmentScope
     fun bindsConnectionView(view: ConnectionFragment): ConnectionContract.View
 
     @Binds
-    @ConnectionScope
+    @FragmentScope
     fun bindsConnectionPresenter(presenter: ConnectionPresenter): ConnectionContract.Presenter
 }
